@@ -14,8 +14,9 @@
 	const docRef = firestore.collection("users").doc("person");
 	const userTextField = document.querySelector("#reguname");
 	const passTextField = document.querySelector("#regpsw");
+	const registerBut = document.querySelector("#regButton");
 	
-	saveButton.addEventListener("enter", function() {
+	registerBut.addEventListener("click", function() {
 		const userSave = userTextField.value;
 		const passSave = passTextField.value;
 		docRef.set({
