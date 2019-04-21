@@ -12,8 +12,8 @@
 	var firestore = firebase.firestore();
 	
 	const docRef = firestore.collection("users").doc("person");
-	const userTextField = document.querySelector("#uname");
-	const passTextField = document.querySelector("#psw");
+	const userTextField = document.querySelector("#reguname");
+	const passTextField = document.querySelector("#regpsw");
 	
 	saveButton.addEventListener("enter", function() {
 		const userSave = userTextField.value;
