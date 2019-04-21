@@ -1,65 +1,252 @@
+<!-- Template: https://www.w3schools.com/howto/howto_css_login_form.asp -->
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/5.10.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/5.10.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/5.10.0/firebase-database.js"></script>
-    <script defer src="/__/firebase/5.10.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/5.10.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 
-    <style media="screen">
-      body { background: #25C3FC; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome to</h2>
-      <h1>Show.Me!</h1>
-      <p>You're seeing this because someone told you about the site. We're still working on this, so please check back later!</p>
-      <a target="_blank" href="https://showme-22fa9.firebaseapp.com/">Reload Page</a>
+/* Set a style for all buttons */
+button {
+  background-color: #4B80B5;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 12px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #616E7B;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 30%;
+  /*border-radius: 50%;*/
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 500px; 
+  display: none; /* Hidden by default */
+  /*position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px dotted #4B80B5;
+  width: 70%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #616E7B;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 300px; 
+}
+
+</style>
+</head>
+<body>
+
+<!-- Actual stuff being displayed -->
+<div class="center">
+
+  <h2>show.me</h2>
+  Login or register to start getting movie and TV show recommendations. 
+  <br><br>
+
+  <button onclick="document.getElementById('id00').style.display='block'" style="width:auto;">Register</button>
+
+  <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+
+<!--   <form action="/action_page.php">
+    <input type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDw_ViQMwH8owRNCrNXcW3_9TWLHMoRjEUhDVRn5t_fqNgo4L3" alt="Submit" width="48" height="48">
+  </form> -->
+
+</div>
+
+<!-- end actual stuff being displayed -->
+
+<div id="id00" class="modal">
+  
+  <form class="modal-content animate" action="/Users/teressatuan/Desktop/CS252_Lab6/rec.html">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id00').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/icon-developer-icon.png" alt="Avatar" class="avatar">
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" id="help" required>
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit">Register</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <!-- <div class="container" style="background-color:#f1f1f1"> -->
+      <!-- <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Cancel</button> -->
+      <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
+    </div>
+  </form>
+</div>
+
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/Users/teressatuan/Desktop/CS252_Lab6/rec.html">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/library-video-icon.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <!-- <div class="container" style="background-color:#f1f1f1"> -->
+      <!-- <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button> -->
+      <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
+    </div>
+  </form>
+</div>
+
+<script>
+
+// Get the modal
+var modal = document.getElementById('id00');
+var modal1 = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+  if (event.target == modal1) {
+        modal1.style.display = "none";
+    }
+}
+
+// window.addEventListener("keyup", dealWithKeyboard, true);
+//  
+// function dealWithKeyboard(e) {
+//     // gets called when any of the keyboard events are overheard
+//   // Only alerts if no modal open 
+//   if (modal.style.display != "block" && modal1.style.display != "block") {
+//     if (e.keyCode == 37) { alert("Left"); }
+//     else if (e.keyCode == 38) { alert("Up"); }
+//     else if (e.keyCode == 39) { alert("Right"); }
+//     else if (e.keyCode == 40) { alert("Down"); }
+//     else if (e.keyCode == 32) { alert("Space"); }
+//   }
+// }
+// alert(document.getElementById("help").value)
+</script>
+<br>
+
+</body>
 </html>
