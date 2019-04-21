@@ -1,22 +1,51 @@
-<!-- Template code from https://www.w3schools.com/howto/howto_js_dropdown.asp
-used for click drop-down menu -->
-
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+
+
+<style type="text/css">
+body {font-family: Arial, Helvetica, sans-serif; background-color: white}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 300px; 
+}
+
+body {
+  background-color: white;
+}
+
+td {
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+h2 {
+  display: inline;
+}
+
+/*table.some_style td {
+background-color: #0f0;
+}*/
+
+/*table.some_style td:hover {
+background-color: #616E7B;
+}*/
 .dropbtn {
-  background-color: #3498DB;
-  color: white;
+  background-color: white;
+  color: black;
   padding: 16px;
   font-size: 16px;
   border: none;
   cursor: pointer;
+  border-radius: 12px;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
+  background-color: #96BAF0;
 }
 
 .dropdown {
@@ -39,28 +68,149 @@ used for click drop-down menu -->
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  font-size: 12px;
 }
 
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
+
+
 </style>
+
+<html>
+<head>
+  <title></title>
 </head>
+
 <body>
 
-<h2>Clickable Dropdown</h2>
-<p>Click on the button to open the dropdown menu.</p>
+<div class="center">
+<h2>show.me</h2> &nbsp; 
 
-<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+ <div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">&#9776</button>
   <div id="myDropdown" class="dropdown-content">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="#recs">Recommendations</a>
+    <a href="#liked">My Liked Titles</a>
+    <a href="#saved">My Saved Titles</a>
   </div>
 </div>
 
+<p><b>logged in as: </b> username</p>
+
+<p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p>
+
+<!-- <div class="navbar">
+  <a class="active" href="#recs">Recs</a> 
+  <a href="#liked">Liked</a> 
+  <a href="#saved">Saved</a> 
+  <a href="#logout">Logout</a>
+</div>
+ -->
+
+<table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
+  <tbody>
+    <tr>
+      <td style="text-align: center;">&nbsp;</td>
+      <td style="text-align: center; height: 35">&nbsp;</td>
+      <td style="text-align: center;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; width: 35">&nbsp;</td>
+
+      <td style="width: 500px; height: 80px;">
+
+      <h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">The Lobster (2015)</span></span></q></h2> 
+      </td>
+
+      <td style="text-align: center; width: 35">&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">&nbsp;</td>
+      <td style="text-align: center; height: 35">&nbsp;</td>
+      <td style="text-align: center;">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>&nbsp;</p>
+</body>
+</html>
+
 <script>
+
+window.addEventListener("keyup", dealWithKeyboard, true);
+ 
+function dealWithKeyboard(e) {
+  // Key press
+    var x = document.getElementById("help").getElementsByTagName("td");
+  if (e.keyCode == 37) { 
+    // alert("Left"); 
+    if (x[3].style.backgroundColor != "rgb(97, 110, 123)") {
+        setTimeout(function() { 
+          x[3].style.backgroundColor = "white"; 
+          x[3].innerHTML = "";
+      }, 800);
+        // x[3].style.backgroundColor = "#4B80B5";
+        x[3].innerHTML = "left"
+    }
+    else x[3].style.backgroundColor = "white";
+    nextTitle()     
+  }
+  else if (e.keyCode == 38) { 
+    // alert("Up"); 
+    if (x[1].style.backgroundColor != "rgb(97, 110, 123)") {
+        setTimeout(function() { 
+          x[1].style.backgroundColor = "white"; 
+          x[1].innerHTML = "";
+      }, 800);
+        // x[1].style.backgroundColor = "#4B80B5";
+        x[1].innerHTML = "skip"
+    }
+    else x[1].style.backgroundColor = "white";
+    nextTitle()     
+    }
+  else if (e.keyCode == 39) { 
+    // alert("Right"); 
+    if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
+        setTimeout(function() { 
+          x[5].style.backgroundColor = "white"; 
+          x[5].innerHTML = "";
+      }, 800);
+        // x[5].style.backgroundColor = "#4B80B5";
+        x[5].innerHTML = "like"
+    }
+    else x[5].style.backgroundColor = "white";
+    nextTitle()     
+  }
+  else if (e.keyCode == 40) { 
+    // alert("Down"); 
+    if (x[7].style.backgroundColor != "rgb(97, 110, 123)") {
+        setTimeout(function() { 
+          x[7].style.backgroundColor = "white"; 
+          x[7].innerHTML = "";
+      }, 800);
+        // x[7].style.backgroundColor = "#4B80B5";
+        x[7].innerHTML = "save"
+    }
+    else x[7].style.backgroundColor = "white";
+    nextTitle()     
+  }
+  else if (e.keyCode == 32) { 
+    // alert("Space"); 
+    if (x[4].style.backgroundColor != "rgb(97, 110, 123)") {
+        // x[4].innerHTML = "In a dystopian near future, single people, according to the laws of The City, are taken to The Hotel, where they are obliged to find a romantic partner in forty-five days or are transformed into beasts and sent off into The Woods."
+        setTimeout(function() { x[4].style.backgroundColor = "white"; }, 800);
+        x[4].style.backgroundColor = "#4B80B5";
+    }
+    else {
+      x[4].style.backgroundColor = "white";
+      // x[4].innerHTML = "Title here"
+    }
+  } 
+}
+
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -80,7 +230,27 @@ window.onclick = function(event) {
     }
   }
 }
-</script>
 
-</body>
-</html>
+var titles = ["Detachment (2011)", "Horrible Bosses 2 (2014)", 
+"Death of a Salesman", "Intermission (2003) ", "The Strangers (2008)", 
+"The Lobster (2015)"]; 
+
+function nextTitle() {
+    var x = document.getElementById("help").getElementsByTagName("td");
+    var text = x[4].textContent;
+
+    var found = -1;
+    for (var i = 0; i < titles.length; i++) {
+      if (text.indexOf(titles[i]) != -1)
+        found = i;
+    }
+    
+    var str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
+    var str2 = titles[(found+1)%titles.length];
+    var str3 = '</span></span></q></h2>';
+    var res = str1.concat(str2, str3)
+    x[4].innerHTML =  res;
+
+}
+
+</script>
