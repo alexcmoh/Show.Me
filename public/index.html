@@ -271,10 +271,10 @@ span.psw {
 	firebase.initializeApp(config);
 	var firestore = firebase.firestore();
 	
-	const docRef = firestore.collection("users").doc(userTextField.value);
 	const userTextField = document.querySelector("#reguname");
 	const passTextField = document.querySelector("#regpsw");
 	const registerBut = document.querySelector("#regButton");
+	const docRef = firestore.collection("users").doc(userTextField.value);
 	
 	registerBut.addEventListener("click", function() {
 		const userSave = userTextField.value;
