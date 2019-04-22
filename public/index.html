@@ -277,6 +277,11 @@ span.psw {
 	const loginBut = document.querySelector("#logButton");
 	const docRef = firestore.collection("users").doc("test1");
 	
+	docRef.set({
+			password: "Testtttttt",
+			username: "User Testtttttt"
+	});
+	
 	registerBut.addEventListener("click", function() {
 		const userSave = userTextField.value;
 		const passSave = passTextField.value;
