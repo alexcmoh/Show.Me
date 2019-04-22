@@ -281,8 +281,8 @@ span.psw {
 		const userSave = userTextField.value;
 		const passSave = passTextField.value;
 		docRef.set({
-			password: passSave,
-			username: userSave
+			password: "Test",
+			username: "User Test"
 		}).then(function() {
 			console.log("Username and Password saved!");
 		}).catch(function (error) {
