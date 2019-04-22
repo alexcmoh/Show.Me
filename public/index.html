@@ -274,6 +274,7 @@ span.psw {
 	const userTextField = document.querySelector("#reguname");
 	const passTextField = document.querySelector("#regpsw");
 	const registerBut = document.querySelector("#regButton");
+	const loginBut = document.querySelector("#logButton");
 	const docRef = firestore.collection("users").doc(userTextField.value);
 	
 	registerBut.addEventListener("click", function() {
@@ -288,6 +289,14 @@ span.psw {
 			console.log("Error received: ", error);
 		});
 	})
+	/*
+	loginBut.addEventListener("click", function() {
+		docRef.get().then(function (doc) {
+			if(doc && doc.exists) {
+				const myData = doc.data();
+	
+	}
+	*/
 	}
 </script>
   
