@@ -275,7 +275,7 @@ span.psw {
 	const passTextField = document.querySelector("#regpsw");
 	const registerBut = document.querySelector("#regButton");
 	const loginBut = document.querySelector("#logButton");
-	const docRef = firestore.collection("users").doc(userTextField.value);
+	const docRef = firestore.collection("users").doc("test1");
 	
 	registerBut.addEventListener("click", function() {
 		const userSave = userTextField.value;
