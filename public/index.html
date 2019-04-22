@@ -9,6 +9,10 @@ body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 
 <!-- <script type="text/javascript" src="./app.js"></script> -->
 
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
+
 <script type="text/javascript"> 
 	function register() {
 		// Initialize Firebase
@@ -40,7 +44,6 @@ body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 				console.log("Error received: ", error);
 			});
 		})
-	
 	}
 </script>
 
@@ -252,8 +255,6 @@ span.psw {
   </form>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
-
 <script>
 
   // Initialize Firebase
@@ -266,8 +267,6 @@ span.psw {
     messagingSenderId: "336455638979"
   };
   firebase.initializeApp(config);
-  
-  function();
 
 // Get the modal
 var modal = document.getElementById('id00');
