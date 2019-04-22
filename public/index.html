@@ -275,25 +275,27 @@ span.psw {
 	const passTextField = document.querySelector("#regpsw");
 	const registerBut = document.querySelector("#regButton");
 	const loginBut = document.querySelector("#logButton");
-	const docRef = firestore.collection("users").doc("test1");
+	// const docRef = firestore.collection("users").doc("test1");
+	const docRef = firestore.doc("users/example");
 	
 	docRef.set({
-			password: "Testtttttt",
-			username: "User Testtttttt"
+			password: "SamplePassword",
+			username: "SampleUsername"
 	});
-	
-	registerBut.addEventListener("click", function() {
+/*
+	// registerBut.addEventListener("click", function() {
 		const userSave = userTextField.value;
 		const passSave = passTextField.value;
 		docRef.set({
-			password: "Test",
-			username: "User Test"
+			password: passSave,
+			username: userSave
 		}).then(function() {
 			console.log("Username and Password saved!");
 		}).catch(function (error) {
 			console.log("Error received: ", error);
 		});
-	})
+*/
+	// })
 	/**
 	loginBut.addEventListener("click", function() {
 		docRef.get().then(function (doc) {
