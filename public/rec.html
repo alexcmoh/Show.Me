@@ -15,16 +15,16 @@ body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 }
 
 body {
-  background-color: white;
+	background-color: white;
 }
 
 td {
-  border-radius: 12px;
-  font-size: 12px;
+	border-radius: 12px;
+	font-size: 12px;
 }
 
 h2 {
-  display: inline;
+	display: inline;
 }
 
 /*table.some_style td {
@@ -37,11 +37,12 @@ background-color: #616E7B;
 .dropbtn {
   background-color: white;
   color: black;
-  padding: 16px;
+  padding: 14px;
   font-size: 16px;
   border: none;
   cursor: pointer;
   border-radius: 12px;
+  display: inline-block;
 }
 
 .dropbtn:hover, .dropbtn:focus {
@@ -50,7 +51,7 @@ background-color: #616E7B;
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  display: inline;
 }
 
 .dropdown-content {
@@ -79,8 +80,9 @@ background-color: #616E7B;
 </style>
 
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-  <title></title>
+	<title></title>
 </head>
 
 <body>
@@ -91,9 +93,14 @@ background-color: #616E7B;
  <div class="dropdown">
   <button onclick="myFunction()" class="dropbtn">&#9776</button>
   <div id="myDropdown" class="dropdown-content">
-    <a href="#recs">Recommendations</a>
-    <a href="#liked">My Liked Titles</a>
+    <a href="/rec">Recommendations</a>
+    <a href="/likes">My Liked Titles</a>
     <a href="#saved">My Saved Titles</a>
+  </div>
+   <div class="dropdown">
+  <button onclick="myFunction1()" class="dropbtn">&#10754</button>
+  <div id="myDropdown1" class="dropdown-content">
+    <a href="/">Log out</a>
   </div>
 </div>
 
@@ -110,30 +117,39 @@ background-color: #616E7B;
  -->
 
 <table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
-  <tbody>
-    <tr>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center; height: 35">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center; width: 35">&nbsp;</td>
+	<tbody>
+		<tr>
+			<td style="text-align: center;">&nbsp;</td>
+			<td style="text-align: center; height: 35">&nbsp;</td>
+			<td style="text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align: center; width: 35">&nbsp;</td>
 
-      <td style="width: 500px; height: 80px;">
+			<td style="width: 500px; height: 80px;">
 
-      <h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">The Lobster (2015)</span></span></q></h2> 
-      </td>
+			<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">{% if messages %}
+			<!-- <ul class="messages"> -->
+			    {% for message in messages %}
+			    {{ message }}
+			    {% endfor %}
+			<!-- </ul> -->
+			{% endif %}
+			</span></span></q></h2> 
+			</td>
 
-      <td style="text-align: center; width: 35">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center; height: 35">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-  </tbody>
+			<td style="text-align: center; width: 35">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">&nbsp;</td>
+			<td style="text-align: center; height: 35">&nbsp;</td>
+			<td style="text-align: center;">&nbsp;</td>
+		</tr>
+	</tbody>
 </table>
 </div>
+
+
 <p>&nbsp;</p>
 </body>
 </html>
@@ -143,78 +159,81 @@ background-color: #616E7B;
 window.addEventListener("keyup", dealWithKeyboard, true);
  
 function dealWithKeyboard(e) {
-  // Key press
+	// Key press
     var x = document.getElementById("help").getElementsByTagName("td");
-  if (e.keyCode == 37) { 
-    // alert("Left"); 
-    if (x[3].style.backgroundColor != "rgb(97, 110, 123)") {
-        setTimeout(function() { 
-          x[3].style.backgroundColor = "white"; 
-          x[3].innerHTML = "";
-      }, 800);
-        // x[3].style.backgroundColor = "#4B80B5";
-        x[3].innerHTML = "left"
+	if (e.keyCode == 37) { 
+		// alert("Left"); 
+		if (x[3].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[3].style.backgroundColor = "white"; 
+		    	x[3].innerHTML = "";
+			}, 800);
+		    // x[3].style.backgroundColor = "#4B80B5";
+		    x[3].innerHTML = "dislike"
+		}
+		else x[3].style.backgroundColor = "white";
+		nextTitle()     
+	}
+	else if (e.keyCode == 38) { 
+		// alert("Up"); 
+		if (x[1].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[1].style.backgroundColor = "white"; 
+		    	x[1].innerHTML = "";
+			}, 800);
+		    // x[1].style.backgroundColor = "#4B80B5";
+		    x[1].innerHTML = "skip"
+		}
+		else x[1].style.backgroundColor = "white";
+		nextTitle()     
     }
-    else x[3].style.backgroundColor = "white";
-    nextTitle()     
-  }
-  else if (e.keyCode == 38) { 
-    // alert("Up"); 
-    if (x[1].style.backgroundColor != "rgb(97, 110, 123)") {
-        setTimeout(function() { 
-          x[1].style.backgroundColor = "white"; 
-          x[1].innerHTML = "";
-      }, 800);
-        // x[1].style.backgroundColor = "#4B80B5";
-        x[1].innerHTML = "skip"
-    }
-    else x[1].style.backgroundColor = "white";
-    nextTitle()     
-    }
-  else if (e.keyCode == 39) { 
-    // alert("Right"); 
-    if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
-        setTimeout(function() { 
-          x[5].style.backgroundColor = "white"; 
-          x[5].innerHTML = "";
-      }, 800);
-        // x[5].style.backgroundColor = "#4B80B5";
-        x[5].innerHTML = "like"
-    }
-    else x[5].style.backgroundColor = "white";
-    nextTitle()     
-  }
-  else if (e.keyCode == 40) { 
-    // alert("Down"); 
-    if (x[7].style.backgroundColor != "rgb(97, 110, 123)") {
-        setTimeout(function() { 
-          x[7].style.backgroundColor = "white"; 
-          x[7].innerHTML = "";
-      }, 800);
-        // x[7].style.backgroundColor = "#4B80B5";
-        x[7].innerHTML = "save"
-    }
-    else x[7].style.backgroundColor = "white";
-    nextTitle()     
-  }
-  else if (e.keyCode == 32) { 
-    // alert("Space"); 
-    if (x[4].style.backgroundColor != "rgb(97, 110, 123)") {
-        // x[4].innerHTML = "In a dystopian near future, single people, according to the laws of The City, are taken to The Hotel, where they are obliged to find a romantic partner in forty-five days or are transformed into beasts and sent off into The Woods."
-        setTimeout(function() { x[4].style.backgroundColor = "white"; }, 800);
-        x[4].style.backgroundColor = "#4B80B5";
-    }
-    else {
-      x[4].style.backgroundColor = "white";
-      // x[4].innerHTML = "Title here"
-    }
-  } 
+	else if (e.keyCode == 39) { 
+		// alert("Right"); 
+		if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[5].style.backgroundColor = "white"; 
+		    	x[5].innerHTML = "";
+			}, 800);
+		    // x[5].style.backgroundColor = "#4B80B5";
+		    x[5].innerHTML = "like"
+		}
+		else x[5].style.backgroundColor = "white";
+		nextTitle()     
+	}
+	else if (e.keyCode == 40) { 
+		// alert("Down"); 
+		if (x[7].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[7].style.backgroundColor = "white"; 
+		    	x[7].innerHTML = "";
+			}, 800);
+		    // x[7].style.backgroundColor = "#4B80B5";
+		    x[7].innerHTML = "save"
+		}
+		else x[7].style.backgroundColor = "white";
+		nextTitle()     
+	}
+	else if (e.keyCode == 32) { 
+		// alert("Space"); 
+		if (x[4].style.backgroundColor != "rgb(97, 110, 123)") {
+		    // x[4].innerHTML = "In a dystopian near future, single people, according to the laws of The City, are taken to The Hotel, where they are obliged to find a romantic partner in forty-five days or are transformed into beasts and sent off into The Woods."
+		    setTimeout(function() { x[4].style.backgroundColor = "white"; }, 800);
+		    x[4].style.backgroundColor = "#4B80B5";
+		}
+		else {
+			x[4].style.backgroundColor = "white";
+			// x[4].innerHTML = "Title here"
+		}
+	} 
 }
 
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
+}
+function myFunction1() {
+  document.getElementById("myDropdown1").classList.toggle("show");
 }
 
 // Close the dropdown if the user clicks outside of it
@@ -241,8 +260,8 @@ function nextTitle() {
 
     var found = -1;
     for (var i = 0; i < titles.length; i++) {
-      if (text.indexOf(titles[i]) != -1)
-        found = i;
+    	if (text.indexOf(titles[i]) != -1)
+    		found = i;
     }
     
     var str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
@@ -253,4 +272,133 @@ function nextTitle() {
 
 }
 
+// Swipe
+// credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
+function swipedetect(el, callback){
+  
+    var touchsurface = el,
+    swipedir,
+    startX,
+    startY,
+    distX,
+    distY,
+    threshold = 150, //required min distance traveled to be considered swipe
+    restraint = 100, // maximum distance allowed at the same time in perpendicular direction
+    allowedTime = 300, // maximum time allowed to travel that distance
+    elapsedTime,
+    startTime,
+    handleswipe = callback || function(swipedir){}
+  
+    touchsurface.addEventListener('touchstart', function(e){
+        var touchobj = e.changedTouches[0]
+        swipedir = 'none'
+        dist = 0
+        startX = touchobj.pageX
+        startY = touchobj.pageY
+        startTime = new Date().getTime() // record time when finger first makes contact with surface
+        e.preventDefault()
+    }, false)
+  
+    touchsurface.addEventListener('touchmove', function(e){
+        e.preventDefault() // prevent scrolling when inside DIV
+    }, false)
+  
+    touchsurface.addEventListener('touchend', function(e){
+        var touchobj = e.changedTouches[0]
+        distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
+        distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
+        elapsedTime = new Date().getTime() - startTime // get time elapsed
+        if (elapsedTime <= allowedTime){ // first condition for awipe met
+            if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+                swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+            }
+            else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+                swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+            }
+        }
+        handleswipe(swipedir)
+        e.preventDefault()
+    }, false)
+}
+  
+//USAGE:
+var el = document.getElementById('help');
+swipedetect(el, function(swipedir){
+    // swipedir contains either "none", "left", "right", "top", or "down"
+    // Content here is my modification
+ //    if (swipedir != "none")
+ //    {
+ //    	alert(swipedir)
+	//     var x = document.getElementById("help").getElementsByTagName("td");
+	// 	if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
+	// 	    setTimeout(function() { 
+	// 	    	x[5].style.backgroundColor = "white"; 
+	// 	    	x[5].innerHTML = "";
+	// 		}, 800);
+	// 	    // x[5].style.backgroundColor = "#4B80B5";
+	// 	    x[5].innerHTML = "like"
+	// 	}
+	//     nextTitle()
+	// }
+
+    var x = document.getElementById("help").getElementsByTagName("td");
+	if (swipedir == "left") { 
+		// alert("Left"); 
+		if (x[3].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[3].style.backgroundColor = "white"; 
+		    	x[3].innerHTML = "";
+			}, 800);
+		    // x[3].style.backgroundColor = "#4B80B5";
+		    x[3].innerHTML = "dislike"
+		}
+		else x[3].style.backgroundColor = "white";
+		nextTitle()     
+	}
+	else if (swipedir == "up") { 
+		// alert("Up"); 
+		if (x[1].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[1].style.backgroundColor = "white"; 
+		    	x[1].innerHTML = "";
+			}, 800);
+		    // x[1].style.backgroundColor = "#4B80B5";
+		    x[1].innerHTML = "skip"
+		}
+		else x[1].style.backgroundColor = "white";
+		nextTitle()     
+    }
+	else if (swipedir == "right") { 
+		// alert("Right"); 
+		if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[5].style.backgroundColor = "white"; 
+		    	x[5].innerHTML = "";
+			}, 800);
+		    // x[5].style.backgroundColor = "#4B80B5";
+		    x[5].innerHTML = "like"
+		}
+		else x[5].style.backgroundColor = "white";
+		nextTitle()     
+	}
+	else if (swipedir == "down") { 
+		// alert("Down"); 
+		if (x[7].style.backgroundColor != "rgb(97, 110, 123)") {
+		    setTimeout(function() { 
+		    	x[7].style.backgroundColor = "white"; 
+		    	x[7].innerHTML = "";
+			}, 800);
+		    // x[7].style.backgroundColor = "#4B80B5";
+		    x[7].innerHTML = "save"
+		}
+		else x[7].style.backgroundColor = "white";
+		nextTitle()     
+	}
+    // el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
+});
+
+
 </script>
+
+
+
