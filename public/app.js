@@ -11,7 +11,7 @@ register() {
 	firebase.initializeApp(config);
 	var firestore = firebase.firestore();
 	
-	const docRef = firestore.collection("users").doc("person");
+	const docRef = firestore.collection("users").doc(userTextField.value);
 	const userTextField = document.querySelector("#reguname");
 	const passTextField = document.querySelector("#regpsw");
 	const registerBut = document.querySelector("#regButton");
