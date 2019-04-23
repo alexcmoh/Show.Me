@@ -300,8 +300,6 @@ window.onclick = function(event) {
 // alert(document.getElementById("help").value)
 </script>
 
-
-
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
@@ -332,7 +330,8 @@ window.onclick = function(event) {
 			username: userSave
 		});
 		
-	window.location.href("rec.html");
+	window.location = "rec.html";
+	
 	}
 </script>
 
@@ -358,11 +357,11 @@ window.onclick = function(event) {
 	const userCheck = userLogField.value;
 	const passCheck = passLogField.value;
 	
-		docLogRef.get().then((docSnapshot) => {
-			if(docSnapshot.exists) {
-				// const myData = doc.data();
-				if(docLogRef.username == userCheck && docLogRef.password == passCheck) {
-					window.location.href("rec.html");
+		docLogRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				if(myData.username == userCheck && myData.password == passCheck) {
+					window.location = "rec.html";
 				}
 				else {
 					window.alert("Incorrect username or password!");
