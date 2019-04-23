@@ -271,18 +271,20 @@ span.psw {
   firebase.initializeApp(config);
 	var firestore = firebase.firestore();
 	
-	const userTextField = document.querySelector("#reguname");
-	const passTextField = document.querySelector("#regpsw");
-	const registerBut = document.querySelector("#regButton");
-	const loginBut = document.querySelector("#logButton");
+	const userTextField = document.querySelector('#reguname');
+	const passTextField = document.querySelector('#regpsw');
+	const registerBut = document.querySelector('#regButton');
+	const loginBut = document.querySelector('#logButton');
 	// const docRef = firestore.collection("users").doc("test1");
 	const docRef = firestore.doc("users/example");
 	
-	docRef.set({
-			password: "SamplePassword",
-			username: "SampleUsername"
-	});
 /*
+	docRef.set({
+			password: passTextField.value,
+			username: userTextField.value
+	});
+*/
+
 	// registerBut.addEventListener("click", function() {
 		const userSave = userTextField.value;
 		const passSave = passTextField.value;
@@ -294,7 +296,7 @@ span.psw {
 		}).catch(function (error) {
 			console.log("Error received: ", error);
 		});
-*/
+
 	// })
 	/**
 	loginBut.addEventListener("click", function() {
