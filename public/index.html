@@ -290,20 +290,15 @@ window.onclick = function(event) {
 			if(doc.exists) {
 				window.alert("Account already exists!");
 				location.reload();
-				return false;
 			}
 			else {
 				docRef.set({
 					password: passSave,
 					username: userSave
 				});
+				location.reload();
 			}
 		});
-		
-		
-		
-		
-	return false;
 	}
 </script>
 
