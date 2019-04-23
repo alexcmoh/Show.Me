@@ -249,21 +249,25 @@ var titles = ["Detachment (2011)", "Horrible Bosses 2 (2014)",
 "The Lobster (2015)"]; 
 
 function nextTitle() {
-    var x = document.getElementById("help").getElementsByTagName("td");
-    var text = x[4].textContent;
+	// Formatting for title string
+    const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
+    const str3 = '</span></span></q></h2>';
 
-    var found = -1;
-    for (var i = 0; i < titles.length; i++) {
-    	if (text.indexOf(titles[i]) != -1)
-    		found = i;
-    }
-    
-    var str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
-    var str2 = titles[(found+1)%titles.length];
-    var str3 = '</span></span></q></h2>';
-    var res = str1.concat(str2, str3)
-    x[4].innerHTML =  res;
-
+	// Request file from server
+	var client = new XMLHttpRequest();
+	client.open('GET', '/titles.txt', false);
+	client.onreadystatechange = function() {
+		// alert(client.responseText);
+		var response = client.responseText;
+		var titles = response.split(",")
+		// get arbitrary title from text file, build html code
+		var i = getRandomArbitrary(0, titles.length)
+		var result = str1.concat(titles[i].trim(), str3)
+		// Update element on screen
+		var x = document.getElementById("help").getElementsByTagName("td")
+		x[4].innerHTML = result;
+	}
+	client.send();
 }
 
 // Swipe
