@@ -242,7 +242,7 @@ span.psw {
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" id="logpsw" required>
         
-      <button type="submit" id="logButton">Login</button>
+      <button type="submit" id="logButton" onclick="authCheck">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -271,23 +271,15 @@ span.psw {
   firebase.initializeApp(config);
 	var firestore = firebase.firestore();
 	
-	const userTextField = document.querySelector('#reguname');
-	const passTextField = document.querySelector('#regpsw');
-	const registerBut = document.querySelector('#regButton');
+	const userLogField = document.querySelector('#reguname');
+	const passLogField = document.querySelector('#regpsw');
 	const loginBut = document.querySelector('#logButton');
-	const docRef = firestore.doc('users/' + userTextField.value);
-	
-/*
-	docRef.set({
-			password: passTextField.value,
-			username: userTextField.value
-	});
-*/
+	const docLogRef = firestore.doc('users/' + userLogField.value);
 
 	// registerBut.addEventListener("click", function() {
-		const userSave = userTextField.value;
-		const passSave = passTextField.value;
-		docRef.set({
+		const userSave = userLogField.value;
+		const passSave = passLogField.value;
+		docLogRef.set({
 			password: passSave,
 			username: userSave
 		}).then(function() {
@@ -307,9 +299,38 @@ span.psw {
 	**/
 	}
 </script>
+
+<script>
+	function authCheck() {
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+    authDomain: "showme-22fa9.firebaseapp.com",
+    databaseURL: "https://showme-22fa9.firebaseio.com",
+    projectId: "showme-22fa9",
+    storageBucket: "showme-22fa9.appspot.com",
+    messagingSenderId: "336455638979"
+  };
+  firebase.initializeApp(config);
+	var firestore = firebase.firestore();
+	
+	const userTextField = document.querySelector('#loguname');
+	const passTextField = document.querySelector('#logpsw');
+	const loginBut = document.querySelector('#logButton');
+	const docRef = firestore.doc('users/' + userTextField.value);
+	
+	/**
+	loginBut.addEventListener("click", function() {
+		docRef.get().then(function (doc) {
+			if(doc && doc.exists) {
+				const myData = doc.data();
+	
+	}
+	**/
+	}
+</script>
   
 <script>
-
 // Get the modal
 var modal = document.getElementById('id00');
 var modal1 = document.getElementById('id01');
