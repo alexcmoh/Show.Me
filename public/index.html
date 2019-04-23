@@ -330,7 +330,9 @@ window.onclick = function(event) {
 			username: userSave
 		});
 		
-	window.location = "rec.html";
+		window.alert("Incorrect username or password!");
+		
+	window.location = "../rec.html";
 	
 	}
 </script>
@@ -356,10 +358,6 @@ window.onclick = function(event) {
 	
 	const userCheck = userLogField.value;
 	const passCheck = passLogField.value;
-	
-	
-	window.alert("Incorrect username or password!");
-	
 	
 		docLogRef.get().then(function(doc) {
 			if(doc.exists) {
@@ -391,7 +389,7 @@ window.onclick = function(event) {
 				window.alert("Incorrect username or password!");
 			}
 		});
-		8/
+		*/
 		
 	}
 </script>
