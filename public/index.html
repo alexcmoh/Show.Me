@@ -162,7 +162,7 @@ span.psw {
 <div id="id00" class="modal">
   
   <!-- <form class="modal-content animate" action="rec.html"> -->
-  <form class="modal-content animate" action="#" onsubmit="return register();">
+  <form class="modal-content animate" action="#">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id00').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/icon-developer-icon.png" alt="Avatar" class="avatar">
@@ -175,7 +175,7 @@ span.psw {
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" id="regpsw" required>
         
-      <button type="submit" id="regButton">Register</button>
+      <button type="submit" id="regButton" onclick="register()">Register</button>
 	  
 	  <!--
       <label>
@@ -286,16 +286,9 @@ window.onclick = function(event) {
 	const userSave = userTextField.value;
 	const passSave = passTextField.value;
 	
-		docRef.get().then(function(doc) {
-			if(doc.exists) {
-				window.alert("Account already exists!");
-			}
-			else {
-				docRef.set({
-					password: passSave,
-					username: userSave
-				});
-			}
+		docRef.set({
+			password: passSave,
+			username: userSave
 		});
 		
 		location.reload();
