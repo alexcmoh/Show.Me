@@ -229,7 +229,7 @@ span.psw {
 
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action="rec.html">
+  <form class="modal-content animate">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/library-video-icon.png" alt="Avatar" class="avatar">
@@ -271,15 +271,14 @@ span.psw {
   firebase.initializeApp(config);
 	var firestore = firebase.firestore();
 	
-	const userLogField = document.querySelector('#reguname');
-	const passLogField = document.querySelector('#regpsw');
-	const loginBut = document.querySelector('#logButton');
-	const docLogRef = firestore.doc('users/' + userLogField.value);
+	const userTextField = document.querySelector('#reguname');
+	const passTextField = document.querySelector('#regpsw');
+	const registerBut = document.querySelector('#regButton');
+	const docRef = firestore.doc('users/' + userTextField.value);
 
-	// registerBut.addEventListener("click", function() {
-		const userSave = userLogField.value;
-		const passSave = passLogField.value;
-		docLogRef.set({
+		const userSave = userTextField.value;
+		const passSave = passTextField.value;
+		docRef.set({
 			password: passSave,
 			username: userSave
 		}).then(function() {
@@ -287,16 +286,6 @@ span.psw {
 		}).catch(function (error) {
 			console.log("Error received: ", error);
 		});
-
-	// })
-	/**
-	loginBut.addEventListener("click", function() {
-		docRef.get().then(function (doc) {
-			if(doc && doc.exists) {
-				const myData = doc.data();
-	
-	}
-	**/
 	}
 </script>
 
@@ -314,19 +303,27 @@ span.psw {
   firebase.initializeApp(config);
 	var firestore = firebase.firestore();
 	
-	const userTextField = document.querySelector('#loguname');
-	const passTextField = document.querySelector('#logpsw');
+	const userLogField = document.querySelector('#loguname');
+	const passLogField = document.querySelector('#logpsw');
 	const loginBut = document.querySelector('#logButton');
-	const docRef = firestore.doc('users/' + userTextField.value);
+	const docLogRef = firestore.doc('users/' + userLogField.value);
 	
-	/**
-	loginBut.addEventListener("click", function() {
-		docRef.get().then(function (doc) {
+	const userCheck = userLogField.value;
+	const passCheck = passLogField.value;
+	
+	// loginBut.addEventListener("click", function() {
+		docLogRef.get().then(function (doc) {
 			if(doc && doc.exists) {
 				const myData = doc.data();
-	
-	}
-	**/
+				if(myData.username == userCheck && myData.password == passCheck) {
+					window.open('rec.html');
+				}
+				else {
+					alert("Incorrect username or password!");
+				}
+			}
+		});
+	// }
 	}
 </script>
   
