@@ -277,19 +277,17 @@ window.onclick = function(event) {
 				location.reload();
 				return false;
 			}
-			else {
-				window.alert("Creating user!");
-				doc.set({
-					password: passSave,
-					username: userSave,
-					likes: "",
-					dislikes: "",
-					saves: ""
-				});
-				window.location.replace("rec.html");
-			}
 	});
 	
+	window.alert("Creating user!");
+	doc.set({
+		password: passSave,
+		username: userSave,
+		likes: "",
+		dislikes: "",
+		saves: ""
+	});
+	window.location.replace("rec.html");
 	
 	return false;
 	}
