@@ -256,6 +256,44 @@ span.psw {
   </form>
 </div>
 
+
+
+
+
+  
+<script>
+// Get the modal
+var modal = document.getElementById('id00');
+var modal1 = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+  if (event.target == modal1) {
+        modal1.style.display = "none";
+    }
+}
+
+// window.addEventListener("keyup", dealWithKeyboard, true);
+//  
+// function dealWithKeyboard(e) {
+//     // gets called when any of the keyboard events are overheard
+//   // Only alerts if no modal open 
+//   if (modal.style.display != "block" && modal1.style.display != "block") {
+//     if (e.keyCode == 37) { alert("Left"); }
+//     else if (e.keyCode == 38) { alert("Up"); }
+//     else if (e.keyCode == 39) { alert("Right"); }
+//     else if (e.keyCode == 40) { alert("Down"); }
+//     else if (e.keyCode == 32) { alert("Space"); }
+//   }
+// }
+// alert(document.getElementById("help").value)
+</script>
+
+
+
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
@@ -329,37 +367,9 @@ span.psw {
 	// }
 	}
 </script>
-  
-<script>
-// Get the modal
-var modal = document.getElementById('id00');
-var modal1 = document.getElementById('id01');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-  if (event.target == modal1) {
-        modal1.style.display = "none";
-    }
-}
 
-// window.addEventListener("keyup", dealWithKeyboard, true);
-//  
-// function dealWithKeyboard(e) {
-//     // gets called when any of the keyboard events are overheard
-//   // Only alerts if no modal open 
-//   if (modal.style.display != "block" && modal1.style.display != "block") {
-//     if (e.keyCode == 37) { alert("Left"); }
-//     else if (e.keyCode == 38) { alert("Up"); }
-//     else if (e.keyCode == 39) { alert("Right"); }
-//     else if (e.keyCode == 40) { alert("Down"); }
-//     else if (e.keyCode == 32) { alert("Space"); }
-//   }
-// }
-// alert(document.getElementById("help").value)
-</script>
+
 <br>
 
 </body>
