@@ -248,6 +248,10 @@ var titles = ["Detachment (2011)", "Horrible Bosses 2 (2014)",
 "Death of a Salesman", "Intermission (2003) ", "The Strangers (2008)", 
 "The Lobster (2015)"]; 
 
+function getRandomArbitrary(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
 function nextTitle() {
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
