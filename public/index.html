@@ -202,7 +202,7 @@ span.psw {
 <div id="id00" class="modal">
   
   <!-- <form class="modal-content animate" action="rec.html"> -->
-  <form class="modal-content animate">
+  <form class="modal-content animate" action="#" onsubmit="return register();">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id00').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/icon-developer-icon.png" alt="Avatar" class="avatar">
@@ -215,7 +215,7 @@ span.psw {
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" id="regpsw" required>
         
-      <button type="submit" id="regButton" onclick="register()">Register</button>
+      <button type="submit" id="regButton">Register</button>
 	  
 	  <!--
       <label>
@@ -228,7 +228,7 @@ span.psw {
     <!-- <div class="container" style="background-color:#f1f1f1"> -->
       <!-- <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Cancel</button> -->
       <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
-    </div>
+    <!-- </div> -->
   </form>
 </div>
 
@@ -260,7 +260,7 @@ span.psw {
     <!-- <div class="container" style="background-color:#f1f1f1"> -->
       <!-- <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button> -->
       <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
-    </div>
+    <!-- </div> -->
   </form>
 </div>
 
@@ -323,15 +323,34 @@ window.onclick = function(event) {
 	const registerBut = document.querySelector('#regButton');
 	const docRef = firestore.doc('users/' + userTextField.value);
 
-		const userSave = userTextField.value;
-		const passSave = passTextField.value;
-		docRef.set({
-			password: passSave,
-			username: userSave
-		});
-		
-	window.location = "https://showme-22fa9.firebaseapp.com/rec.html";
+	const userSave = userTextField.value;
+	const passSave = passTextField.value;
 	
+		docRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				if(myData.username == userSave) { // Account already exists
+					window.alert("Account already exists!");
+					location.reload();
+				}
+				else { // Account does not exist
+					docRef.set({
+						password: passSave,
+						username: userSave
+					});
+					window.location.replace("rec.html");
+				}
+			}
+			else { // Account does not exist
+				docRef.set({
+					password: passSave,
+					username: userSave
+				});
+				window.alert("User: " + userSave + " / Pass: " + passSave);
+				window.location.replace("rec.html");
+			}
+		});
+	return false;
 	}
 </script>
 
