@@ -259,7 +259,7 @@ function nextTitle() {
 
 	// Request file from server
 	var client = new XMLHttpRequest();
-	client.open('GET', '/titles.txt', false);
+	client.open('GET', 'titles.txt', false);
 	client.onreadystatechange = function() {
 		// alert(client.responseText);
 		var response = client.responseText;
