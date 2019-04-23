@@ -276,7 +276,7 @@ span.psw {
 	const registerBut = document.querySelector('#regButton');
 	const loginBut = document.querySelector('#logButton');
 	// const docRef = firestore.collection("users").doc("test1");
-	const docRef = firestore.doc("users/example");
+	const docRef = firestore.doc("users/" + userTextField.value);
 	
 /*
 	docRef.set({
