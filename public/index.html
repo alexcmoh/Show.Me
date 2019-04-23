@@ -286,6 +286,13 @@ window.onclick = function(event) {
 					dislikes: "",
 					saves: ""
 				});
+				docRef.set({
+					password: passSave,
+					username: userSave,
+					likes: "",
+					dislikes: "",
+					saves: ""
+				});
 				window.location.replace("rec.html");
 			}
 	});
