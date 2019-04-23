@@ -1,4 +1,4 @@
-(function() {
+register() {
 	// Initialize Firebase
 	var config = {
 		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
@@ -11,7 +11,7 @@
 	firebase.initializeApp(config);
 	var firestore = firebase.firestore();
 	
-	const docRef = firestore.collection("users").doc("person");
+	const docRef = firestore.collection("users").doc(userTextField.value);
 	const userTextField = document.querySelector("#reguname");
 	const passTextField = document.querySelector("#regpsw");
 	const registerBut = document.querySelector("#regButton");
@@ -29,5 +29,5 @@
 		});
 	})
 	
-})();
+}
   

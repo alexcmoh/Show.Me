@@ -7,6 +7,46 @@
 <style>
 body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 
+<!-- <script src="public/app.js" type="text/javascript"></script> -->
+
+<!-- <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script> -->
+
+<!-- <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script> -->
+
+<!-- <script type="text/javascript"> 
+	function register() {
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+			authDomain: "showme-22fa9.firebaseapp.com",
+			databaseURL: "https://showme-22fa9.firebaseio.com",
+			projectId: "showme-22fa9",
+			storageBucket: "showme-22fa9.appspot.com",
+			messagingSenderId: "336455638979"
+		};
+		firebase.initializeApp(config);
+		var firestore = firebase.firestore();
+	
+		const docRef = firestore.collection("users").doc("johnson");
+		const userTextField = document.querySelector("#reguname");
+		const passTextField = document.querySelector("#regpsw");
+		const registerBut = document.querySelector("#regButton");
+	
+		registerBut.addEventListener("click", function() {
+			const userSave = userTextField.value;
+			const passSave = passTextField.value;
+			docRef.set({
+				password: passSave
+				username: userSave
+			}).then(function() {
+				console.log("Username and Password saved!");
+			}).catch(function (error) {
+				console.log("Error received: ", error);
+			});
+		})
+	}
+</script> -->
+
 /* Full-width input fields */
 input[type=text], input[type=password] {
   width: 100%;
@@ -161,8 +201,7 @@ span.psw {
 
 <div id="id00" class="modal">
   
-  <!-- <form class="modal-content animate" action="rec.html"> -->
-  <form class="modal-content animate">
+  <form class="modal-content animate" action="rec.html">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id00').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/icon-developer-icon.png" alt="Avatar" class="avatar">
@@ -176,25 +215,21 @@ span.psw {
       <input type="password" placeholder="Enter Password" name="psw" id="regpsw" required>
         
       <button type="submit" id="regButton" onclick="register()">Register</button>
-	  
-	  <!--
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
-	  -->
-	  
     </div>
 
     <!-- <div class="container" style="background-color:#f1f1f1"> -->
       <!-- <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Cancel</button> -->
       <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
-    <!-- </div> -->
+    </div>
   </form>
 </div>
 
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action="#" onsubmit="return authCheck();">
+  <form class="modal-content animate" action="rec.html">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/library-video-icon.png" alt="Avatar" class="avatar">
@@ -208,28 +243,74 @@ span.psw {
       <input type="password" placeholder="Enter Password" name="psw" id="logpsw" required>
         
       <button type="submit" id="logButton">Login</button>
-	  
-	  <!--
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
-	  -->
-	  
     </div>
 
     <!-- <div class="container" style="background-color:#f1f1f1"> -->
       <!-- <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button> -->
       <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
-    <!-- </div> -->
+    </div>
   </form>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
 
+<script>
+	function register() {
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+    authDomain: "showme-22fa9.firebaseapp.com",
+    databaseURL: "https://showme-22fa9.firebaseio.com",
+    projectId: "showme-22fa9",
+    storageBucket: "showme-22fa9.appspot.com",
+    messagingSenderId: "336455638979"
+  };
+  firebase.initializeApp(config);
+	var firestore = firebase.firestore();
+	
+	const userTextField = document.querySelector('#reguname');
+	const passTextField = document.querySelector('#regpsw');
+	const registerBut = document.querySelector('#regButton');
+	const loginBut = document.querySelector('#logButton');
+	// const docRef = firestore.collection("users").doc("test1");
+	const docRef = firestore.doc("users/" + userTextField.value);
+	
+/*
+	docRef.set({
+			password: passTextField.value,
+			username: userTextField.value
+	});
+*/
 
+	// registerBut.addEventListener("click", function() {
+		const userSave = userTextField.value;
+		const passSave = passTextField.value;
+		docRef.set({
+			password: passSave,
+			username: userSave
+		}).then(function() {
+			console.log("Username and Password saved!");
+		}).catch(function (error) {
+			console.log("Error received: ", error);
+		});
 
-
+	// })
+	/**
+	loginBut.addEventListener("click", function() {
+		docRef.get().then(function (doc) {
+			if(doc && doc.exists) {
+				const myData = doc.data();
+	
+	}
+	**/
+	}
+</script>
   
 <script>
+
 // Get the modal
 var modal = document.getElementById('id00');
 var modal1 = document.getElementById('id01');
@@ -259,94 +340,6 @@ window.onclick = function(event) {
 // }
 // alert(document.getElementById("help").value)
 </script>
-
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
-
-<script type="text/javascript">
-	function register() {
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-    authDomain: "showme-22fa9.firebaseapp.com",
-    databaseURL: "https://showme-22fa9.firebaseio.com",
-    projectId: "showme-22fa9",
-    storageBucket: "showme-22fa9.appspot.com",
-    messagingSenderId: "336455638979"
-  };
-  firebase.initializeApp(config);
-	var firestore = firebase.firestore();
-	
-	const userTextField = document.querySelector('#reguname');
-	const passTextField = document.querySelector('#regpsw');
-	const registerBut = document.querySelector('#regButton');
-	const docRef = firestore.doc('users/' + userTextField.value);
-
-	const userSave = userTextField.value;
-	const passSave = passTextField.value;
-	
-		docRef.set({
-			password: passSave,
-			username: userSave
-		});
-		
-		location.reload();
-	}
-</script>
-
-<script type="text/javascript">
-	function authCheck() {
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-    authDomain: "showme-22fa9.firebaseapp.com",
-    databaseURL: "https://showme-22fa9.firebaseio.com",
-    projectId: "showme-22fa9",
-    storageBucket: "showme-22fa9.appspot.com",
-    messagingSenderId: "336455638979"
-  };
-  firebase.initializeApp(config);
-	var firestore = firebase.firestore();
-	
-	const userLogField = document.querySelector('#loguname');
-	const passLogField = document.querySelector('#logpsw');
-	const loginBut = document.querySelector('#logButton');
-	const docLogRef = firestore.doc('users/' + userLogField.value);
-	
-	const userCheck = userLogField.value;
-	const passCheck = passLogField.value;
-	
-		docLogRef.get().then(function(doc) {
-			if(doc.exists) {
-				const myData = doc.data();
-				if(myData.username == userCheck && myData.password == passCheck) {
-					window.location.replace("rec.html");
-				}
-				else {
-					window.alert("Incorrect username or password!");
-					location.reload();
-				}
-			}
-			else {
-				window.alert("Incorrect username or password!");
-				location.reload();
-			}
-		});
-	return false;
-	}
-</script>
-
-<!--
-<script type="text/javascript">
-function testDirect() {
-	window.alert("Passed");
-	window.location.replace("rec.html");
-	return false;
-}
-</script
--->
-
 <br>
 
 </body>
