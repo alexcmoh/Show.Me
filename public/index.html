@@ -292,16 +292,14 @@ window.onclick = function(event) {
 				location.reload();
 				return false;
 			}
-			else {
-				docRef.set({
-					password: passSave,
-					username: userSave
-				});
-				window.location.replace("rec.html");
-			}
 	});
+	docRef.set({
+		password: passSave,
+		username: userSave
+	});
+	window.location.replace("rec.html");
 	
-		return false;
+	return false;
 	}
 </script>
 
