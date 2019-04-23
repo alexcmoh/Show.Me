@@ -234,7 +234,7 @@ span.psw {
 
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action="#" onsubmit="return testDirect();">
+  <form class="modal-content animate" action="#" onsubmit="return authCheck();">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/library-video-icon.png" alt="Avatar" class="avatar">
@@ -361,39 +361,23 @@ window.onclick = function(event) {
 			if(doc.exists) {
 				const myData = doc.data();
 				if(myData.username == userCheck && myData.password == passCheck) {
-					window.alert("Valid query reached!");
-					window.location = "rec.html";
-					return false;
+					window.location.replace("rec.html");
 				}
 				else {
 					window.alert("Incorrect username or password!");
+					location.reload();
 				}
 			}
 			else {
 				window.alert("Incorrect username or password!");
+				location.reload();
 			}
 		});
-		
-		/* Saving this in case it breaks
-		docLogRef.get().then(function (doc) {
-			if(doc && doc.exists) {
-				const myData = doc.data();
-				if(myData.username == userCheck && myData.password == passCheck) {
-					window.location.href("rec.html");
-				}
-				else {
-					window.alert("Incorrect username or password!");
-				}
-			}
-			else {
-				window.alert("Incorrect username or password!");
-			}
-		});
-		*/
-		
+	return false;
 	}
 </script>
 
+<!--
 <script type="text/javascript">
 function testDirect() {
 	window.alert("Passed");
@@ -401,7 +385,7 @@ function testDirect() {
 	return false;
 }
 </script
-
+-->
 
 <br>
 
