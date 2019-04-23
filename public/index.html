@@ -357,6 +357,10 @@ window.onclick = function(event) {
 	const userCheck = userLogField.value;
 	const passCheck = passLogField.value;
 	
+	
+	window.alert("Incorrect username or password!");
+	
+	
 		docLogRef.get().then(function(doc) {
 			if(doc.exists) {
 				const myData = doc.data();
