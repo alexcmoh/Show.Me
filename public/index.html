@@ -234,7 +234,7 @@ span.psw {
 
 <div id="id01" class="modal">
   
-  <form class="modal-content animate">
+  <form class="modal-content animate" action="#" onsubmit="return testDirect();">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="http://icons.iconarchive.com/icons/ampeross/qetto/256/library-video-icon.png" alt="Avatar" class="avatar">
@@ -247,7 +247,7 @@ span.psw {
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" id="logpsw" required>
         
-      <button type="submit" id="logButton" onclick="authCheck()">Login</button>
+      <button type="submit" id="logButton">Login</button>
 	  
 	  <!--
       <label>
@@ -361,7 +361,9 @@ window.onclick = function(event) {
 			if(doc.exists) {
 				const myData = doc.data();
 				if(myData.username == userCheck && myData.password == passCheck) {
-					window.location = "https://showme-22fa9.firebaseapp.com/rec.html";
+					window.alert("Valid query reached!");
+					window.location = "rec.html";
+					return false;
 				}
 				else {
 					window.alert("Incorrect username or password!");
@@ -392,6 +394,13 @@ window.onclick = function(event) {
 	}
 </script>
 
+<script type="text/javascript">
+function testDirect() {
+	window.alert("Passed");
+	window.location.replace("rec.html");
+	return false;
+}
+</script
 
 
 <br>
