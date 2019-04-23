@@ -280,8 +280,11 @@ window.onclick = function(event) {
 			else {
 				window.alert("Creating user!");
 				docRef.set({
-				password: passSave,
-				username: userSave
+					password: passSave,
+					username: userSave,
+					likes: "",
+					dislikes: "",
+					saves: ""
 				});
 				window.location.replace("rec.html");
 			}
