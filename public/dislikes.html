@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+
+<style type="text/css">
+body {font-family: Arial, Helvetica, sans-serif; background-color: white}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 300px; 
+}
+
+body {
+	background-color: white;
+}
+
+td {
+	border-radius: 12px;
+	font-size: 12px;
+}
+
+h2 {
+	display: inline;
+}
+
+/*table.some_style td {
+background-color: #0f0;
+}*/
+
+/*table.some_style td:hover {
+background-color: #616E7B;
+}*/
+.dropbtn {
+  background-color: white;
+  color: black;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #96BAF0;
+}
+
+.dropdown {
+  position: relative;
+  display: inline;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 12px;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+
+</style>
+
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<title></title>
+</head>
+
+<body>
+
+<div class="center">
+<h2>show.me</h2> &nbsp; 
+
+ <div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">&#9776</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="/rec">Recommendations</a>
+    <a href="/likes">My Liked Titles</a>
+    <a href="#saved">My Saved Titles</a>
+  </div>
+   <div class="dropdown">
+  <button onclick="myFunction1()" class="dropbtn">&#10754</button>
+  <div id="myDropdown1" class="dropdown-content">
+    <a href="/">Log out</a>
+  </div>
+</div>
+
+<p><b>logged in as: </b> 
+{% block content %}
+{% if user.is_authenticated %}
+  {{ user.username }}
+{% else %}
+  you are not logged in
+  <br>your actions will not be saved
+{% endif %}
+{% endblock %}
+</p>
+<p>list of titles you disliked.</p>
+
+
+</div>
+<p>&nbsp;</p>
+
+</body>
+
+</html>
+
+<script>
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+function myFunction1() {
+  document.getElementById("myDropdown1").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+
+
+
+
