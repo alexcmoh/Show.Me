@@ -277,7 +277,7 @@ span.psw {
 	const registerBut = document.querySelector('#regButton');
 	const docRef = firestore.doc('users/' + userTextField.value);
 	
-	window.location.replace("rec.html");
+	window.location.href("rec.html");
 
 		const userSave = userTextField.value;
 		const passSave = passTextField.value;
@@ -321,10 +321,10 @@ span.psw {
 			if(doc && doc.exists) {
 				const myData = doc.data();
 				if(myData.username == userCheck && myData.password == passCheck) {
-					window.location.replace("rec.html");
+					window.location.href("rec.html");
 				}
 				else {
-					alert("Incorrect username or password!");
+					window.alert("Incorrect username or password!");
 				}
 			}
 		});
