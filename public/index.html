@@ -276,19 +276,15 @@ span.psw {
 	const passTextField = document.querySelector('#regpsw');
 	const registerBut = document.querySelector('#regButton');
 	const docRef = firestore.doc('users/' + userTextField.value);
-	
-	window.location.href("rec.html");
 
 		const userSave = userTextField.value;
 		const passSave = passTextField.value;
 		docRef.set({
 			password: passSave,
 			username: userSave
-		}).then(function() {
-			console.log("Username and Password saved!");
-		}).catch(function (error) {
-			console.log("Error received: ", error);
 		});
+		
+	window.location.href("rec.html");
 	}
 </script>
 
