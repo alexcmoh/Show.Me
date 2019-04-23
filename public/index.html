@@ -330,8 +330,7 @@ window.onclick = function(event) {
 			username: userSave
 		});
 		
-	window.location.href = "rec.html";
-	return false;
+	window.location = "https://showme-22fa9.firebaseapp.com/rec.html";
 	
 	}
 </script>
@@ -362,8 +361,7 @@ window.onclick = function(event) {
 			if(doc.exists) {
 				const myData = doc.data();
 				if(myData.username == userCheck && myData.password == passCheck) {
-					window.location.href = "rec.html";
-					return false;
+					window.location = "https://showme-22fa9.firebaseapp.com/rec.html";
 				}
 				else {
 					window.alert("Incorrect username or password!");
