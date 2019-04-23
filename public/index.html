@@ -328,28 +328,18 @@ window.onclick = function(event) {
 	
 		docRef.get().then(function(doc) {
 			if(doc.exists) {
-				const myData = doc.data();
-				if(myData.username == userSave) { // Account already exists
-					window.alert("Account already exists!");
-					location.reload();
-				}
-				else { // Account does not exist
-					docRef.set({
-						password: passSave,
-						username: userSave
-					});
-					window.location.replace("rec.html");
-				}
-			}
-			else { // Account does not exist
-				docRef.set({
-					password: passSave,
-					username: userSave
-				});
-				window.alert("User: " + userSave + " / Pass: " + passSave);
-				window.location.replace("rec.html");
+				window.alert("Account already exists!");
+				location.reload();
+				return false;
 			}
 		});
+		
+		docRef.set({
+			password: passSave,
+			username: userSave
+		});
+		window.location.replace("rec.html");
+		
 	return false;
 	}
 </script>
