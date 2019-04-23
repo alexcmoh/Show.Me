@@ -358,9 +358,22 @@ window.onclick = function(event) {
 	const userCheck = userLogField.value;
 	const passCheck = passLogField.value;
 	
-	// window.location.replace("rec.html");
-	
-	// loginBut.addEventListener("click", function() {
+		docLogRef.get().then((docSnapshot) => {
+			if(docSnapshot.exists) {
+				// const myData = doc.data();
+				if(docLogRef.username == userCheck && docLogRef.password == passCheck) {
+					window.location.href("rec.html");
+				}
+				else {
+					window.alert("Incorrect username or password!");
+				}
+			}
+			else {
+				window.alert("Incorrect username or password!");
+			}
+		});
+		
+		/* Saving this in case it breaks
 		docLogRef.get().then(function (doc) {
 			if(doc && doc.exists) {
 				const myData = doc.data();
@@ -371,8 +384,12 @@ window.onclick = function(event) {
 					window.alert("Incorrect username or password!");
 				}
 			}
+			else {
+				window.alert("Incorrect username or password!");
+			}
 		});
-	// }
+		8/
+		
 	}
 </script>
 
