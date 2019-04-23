@@ -311,14 +311,14 @@ span.psw {
 	const userCheck = userLogField.value;
 	const passCheck = passLogField.value;
 	
-	window.location.replace("rec.html");
+	// window.location.replace("rec.html");
 	
 	// loginBut.addEventListener("click", function() {
 		docLogRef.get().then(function (doc) {
 			if(doc && doc.exists) {
 				const myData = doc.data();
 				if(myData.username == userCheck && myData.password == passCheck) {
-					window.open("rec.html");
+					window.location.replace("rec.html");
 				}
 				else {
 					alert("Incorrect username or password!");
