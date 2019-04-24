@@ -7,6 +7,16 @@ body {
 	background-color: white
 }
 
+td {
+	border-radius: 12px;
+	font-size: 12px;
+}
+
+h2 {
+	display: inline;
+}
+
+/* All content are in center div */
 .center {
   margin: 0;
   position: absolute;
@@ -15,15 +25,6 @@ body {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   width: 300px; 
-}
-
-td {
-	border-radius: 12px;
-	font-size: 12px;
-}
-
-h2 {
-	display: inline;
 }
 
 /* Button formatting */
@@ -65,8 +66,11 @@ h2 {
   font-size: 12px;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {
+	background-color: #ddd;
+}
 
+/* Visibility */
 .show {
 	display: block;
 }
@@ -77,42 +81,42 @@ h2 {
 
 </style>
 
-<html>
-<!-- ! Important for mobile view -->
+<html> <!-- ! Important for mobile view -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<head>
-<title>show.me recommendations</title>
-</head>
+<head><title>show.me recommendations</title></head>
 
 <body>
 
-<div class="center">
-<h2>show.me</h2> &nbsp; 
+	<!-- start center div -->
+	<div class="center"> 
+	<h2>show.me</h2> &nbsp; 
 
- <div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">&#9776</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="/rec">Recommendations</a>
-    <a href="/likes">My Liked Titles</a>
-    <a href="#saved">My Saved Titles</a>
-  </div>
-   <div class="dropdown">
-  <button onclick="myFunction1()" class="dropbtn">&#10754</button>
-  <div id="myDropdown1" class="dropdown-content">
-    <a href="/">Log out</a>
-  </div>
-</div>
+	<!-- dropdown menus -->
+	<div class="dropdown">
+	<button onclick="myFunction()" class="dropbtn">&#9776</button>
+		<div id="myDropdown" class="dropdown-content">
+			<a href="/rec">Recommendations</a>
+			<a href="/likes">My Liked Titles</a>
+			<a href="#saved">My Saved Titles</a>
+		</div>
 
-<p><b>logged in as: </b></p> <p id="printName"></p>
+		<div class="dropdown">
+			<button onclick="myFunction1()" class="dropbtn">&#10754</button>
+			<div id="myDropdown1" class="dropdown-content">
+			<a href="/">Log out</a>
+			</div>
+		</div>
 
-<script>
+	<p><b>logged in as: </b></p> <p id="printName"></p>
+
+	<script>
 	document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
-</script>
+	</script>
 
-<p>Use arrows or swipe. Right to like, left to discard, down to save, up to skip.</p>
+	<p>Use arrows or swipe. Right to like, left to discard, down to save, up to skip.</p>
 
-<table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
+	<!-- title table -->
+	<table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
 	<tbody>
 		<tr>
 			<td style="text-align: center;">&nbsp;</td>
@@ -121,12 +125,8 @@ h2 {
 		</tr>
 		<tr>
 			<td style="text-align: center; width: 35">&nbsp;</td>
-
 			<td style="width: 500px; height: 80px;">
-
-			<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;</span></span></q></h2> 
-			</td>
-
+			<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;</span></span></q></h2></td>
 			<td style="text-align: center; width: 35">&nbsp;</td>
 		</tr>
 		<tr>
@@ -135,11 +135,17 @@ h2 {
 			<td style="text-align: center;">&nbsp;</td>
 		</tr>
 	</tbody>
-</table>
-</div>
-<div class="hidden" id="titleInfo">EMPTY</div>
-<p>&nbsp;</p>
+	</table>
+
+	</div>  
+	<!-- ends center div -->
+
+	<!-- hidden information -->
+	<div class="hidden" id="titleInfo">EMPTY</div> 
+	<p>&nbsp;</p>
+
 </body>
+
 </html>
 
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
@@ -148,7 +154,7 @@ h2 {
 
 <script>
 
-nextTitle()
+nextTitle() 
 
 window.addEventListener("keyup", dealWithKeyboard, true);
  
@@ -245,7 +251,7 @@ function nextTitle() {
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
     const str3 = '</span></span></q></h2>';
 
-    // Todo: Get recs from rec list 
+    // Load user's recs list from database
 	var info = getUserLists(window.localStorage.getItem('currentUser'));
 	// var likes = info[0]
 	// var dislikes = info[1]
@@ -271,6 +277,7 @@ function nextTitle() {
 }
 
 // Takes titleList[i].split("@")
+// called every time an action is performed
 function updateTitle(titleInfo) {
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
@@ -283,8 +290,9 @@ function updateTitle(titleInfo) {
 
     // Update title on screen
     var x = document.getElementById("help").getElementsByTagName("td");
-    var y = document.getElementById("titleInfo");
     x[4].innerHTML = str1.concat(title, str3);
+    // Updates hidden titleInfo
+    var y = document.getElementById("titleInfo");
     var str = title.concat("@", genres, "@", rating)
     y.innerHTML = str;
 
@@ -292,12 +300,12 @@ function updateTitle(titleInfo) {
 }
 
 function getRecsFromFile() {
+	// Returns list of movie titleInfo strings
 	var recs = [];
 	// Request file from server
 	var client = new XMLHttpRequest();
 	client.open('GET', 'titles.txt', false);
 	client.onreadystatechange = function() {
-		// alert(client.responseText);
 		var response = client.responseText;
 		var titles = response.split("\n")
 		for (var i = 0; i < titles.length; i++) {
@@ -305,7 +313,6 @@ function getRecsFromFile() {
 		}
 	}
 	client.send();
-	// alert(recs)
 	return recs
 }
 
@@ -423,7 +430,6 @@ swipedetect(el, function(swipedir){
     // el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
 });
 
-
 </script>
 
 
@@ -482,26 +488,46 @@ function updateUserLists(username, likes, dislikes, saves, recs) {
 	// Get user data
 	const docRef = firestore.doc('users/' + username);
 
-	// Retrieve likes, dislikes, saves, recs
+	// Update likes, dislikes, saves, recs
 	var lists = ["", "", "", ""];
 	docRef.get().then(function(doc) {
 		if(doc.exists) {
 			const myData = doc.data();
-			if (likes != "") {
-				myData.likes = likes
-			}
-			if (dislikes != "") {
-				myData.dislikes = dislikes
-			}
-			if (saves != "") {
-				myData.saves = saves
-			}
+			if (likes != "") 
+				docRef.set({ likes: myData.likes+likes }); 
+			if (dislikes != "") 
+				docRef.set({ likes: myData.dislikes+dislikes }); 
+			if (saves != "") 
+				docRef.set({ likes: myData.saves+saves }); 
 			if (recs != "") {
-				myData.likes = recs
+				docRef.set({ likes: myData.recs+recs }); 
 			}
 		}
 	});
 	return lists;
+}
+
+function userAction(username, action, titleInfo)
+{
+	if (action == "like")
+	{
+		updateUserLists(username, titleInfo, "", "", "");
+	}
+	else if (action == "dislike")
+	{
+		updateUserLists(username, "", titleInfo, "", "");
+	}
+	else if (action == "save")
+	{
+		updateUserLists(username, "", "", titleInfo, "");
+	}
+	else
+	{
+		// Default skip 
+	}
+	updateTitle()
+	// remove nextTitle in swipe and keyboard sections
+	// and replace with call to userAction(...)
 }
 
 
