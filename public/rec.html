@@ -159,60 +159,46 @@ h2 {
 
 nextTitle("skip"); // when window first loads
 
+// Keyboard listener
 window.addEventListener("keyup", dealWithKeyboard, true);
- 
 function dealWithKeyboard(e) {
 	// Key press
-    var x = document.getElementById("help").getElementsByTagName("td");
+	var x = document.getElementById("help").getElementsByTagName("td");
 	if (e.keyCode == 37) { 
-		if (x[3].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[3].style.backgroundColor = "white"; 
-		    	x[3].innerHTML = "";
-			}, 800);
-		    x[3].innerHTML = "dislike"
-		}
-		else x[3].style.backgroundColor = "white";
+		// alert("Left"); 
+		displayAction(3, "dislike")
 		nextTitle("dislike")     
 	}
 	else if (e.keyCode == 38) { 
-		if (x[1].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[1].style.backgroundColor = "white"; 
-		    	x[1].innerHTML = "";
-			}, 800);
-		    x[1].innerHTML = "skip"
-		}
-		else x[1].style.backgroundColor = "white";
+		// alert("Up"); 
+		displayAction(1, "skip")
 		nextTitle("skip")     
     }
 	else if (e.keyCode == 39) { 
-		if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[5].style.backgroundColor = "white"; 
-		    	x[5].innerHTML = "";
-			}, 800);
-		    x[5].innerHTML = "like"
-		}
-		else x[5].style.backgroundColor = "white";
+		// alert("Right"); 
+		displayAction(5, "like")
 		nextTitle("like")     
 	}
 	else if (e.keyCode == 40) { 
-		if (x[7].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[7].style.backgroundColor = "white"; 
-		    	x[7].innerHTML = "";
-			}, 800);
-		    x[7].innerHTML = "save"
-		}
-		else x[7].style.backgroundColor = "white";
+		// alert("Down"); 
+		displayAction(7, "save");
 		nextTitle("save")     
 	}
-	else if (e.keyCode == 32) { 
-		// spacebar 
+	else if (e.keyCode == 32)
+	{
 		var info = document.getElementById("titleInfo")
 		alert(info.innerHTML)
-	} 
+	}
+}
+
+function displayAction(index, action) {
+	// Prints action name in corresponding cell for 800ms
+    var x = document.getElementById("help").getElementsByTagName("td");
+    setTimeout(function() { 
+    	x[index].style.backgroundColor = "white"; 
+    	x[index].innerHTML = "";
+	}, 800);
+    x[index].innerHTML = action;
 }
 
 /* Toggle menu and logout menu buttons */
