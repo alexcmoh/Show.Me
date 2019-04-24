@@ -271,8 +271,6 @@ window.onclick = function(event) {
 	const userSave = userTextField.value;
 	const passSave = passTextField.value;
 	
-	window.alert("Scanned user: " + userTextField.value + " ||| pass: " + passTextField.value);
-	
 	docRef.get().then(function(doc) {
 			if(doc.exists) {
 				window.alert("User already exists!");
@@ -287,7 +285,8 @@ window.onclick = function(event) {
 					saves: "",
 					rec: ""
 				});
-				window.location.replace("rec.html");
+				window.alert("User saved! Please login to continue.");
+				location.reload();
 			}
 	});
 	
