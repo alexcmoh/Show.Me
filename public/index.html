@@ -309,14 +309,20 @@ window.onclick = function(event) {
 			if(doc.exists) {
 				window.alert("User already exists!");
 				location.reload();
-				return false;
+			}
+			else {
+				docRef.set({
+					password: passSave,
+					username: userSave,
+					likes: "",
+					dislikes: "",
+					saves: "",
+					rec: ""
+				});
+				window.alert("User saved! Please login to continue.");
+				location.reload();
 			}
 	});
-	docRef.set({
-		password: passSave,
-		username: userSave
-	});
-	window.location.replace("rec.html");
 	
 	return false;
 	}
