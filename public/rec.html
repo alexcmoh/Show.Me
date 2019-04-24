@@ -104,9 +104,13 @@ h2 {
   </div>
 </div>
 
-<p><b>logged in as: </b> username</p>
+<p><b>logged in as: </b></p> <p id="printName"></p>
 
-<p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p>
+<script>
+	document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+</script>
+
+<p>Use arrows or swipe. Right to like, left to discard, down to save, up to skip.</p>
 
 <table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
 	<tbody>
@@ -431,7 +435,7 @@ swipedetect(el, function(swipedir){
 
 <script type="text/javascript">
 
-// var info = getUserLists(username)
+// var info = getUserLists(window.localStorage.getItem('currentUser'))
 // var likes = info[0]
 // var dislikes = info[1]
 // var saves = info[2]
@@ -452,11 +456,11 @@ function getUserLists(username) {
 	var firestore = firebase.firestore();
 
 	// Get user data
-	const docLogRef = firestore.doc('users/' + username);
+	const docRef = firestore.doc('users/' + username);
 
 	// Retrieve likes, dislikes, saves, recs
 	var lists = ["", "", "", ""];
-	docLogRef.get().then(function(doc) {
+	docRef.get().then(function(doc) {
 		if(doc.exists) {
 			const myData = doc.data();
 			lists[0] = myData.likes
