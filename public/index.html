@@ -266,7 +266,7 @@ window.onclick = function(event) {
 	const userTextField = document.querySelector('#reguname');
 	const passTextField = document.querySelector('#regpsw');
 	const registerBut = document.querySelector('#regButton');
-	const docRef = firestore.doc('users/' + userTextField.value);
+	const docRef = firestore.collection('users').doc(userTextField.value);
 
 	const userSave = userTextField.value;
 	const passSave = passTextField.value;
