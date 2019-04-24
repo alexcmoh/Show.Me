@@ -432,71 +432,71 @@ swipedetect(el, function(swipedir){
 <script type="text/javascript">
 
 // Retrieves username's lists from database
-function getUserLists(username) {
-	// Initialize Firebase
-	var config = {
-		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-		authDomain: "showme-22fa9.firebaseapp.com",
-		databaseURL: "https://showme-22fa9.firebaseio.com",
-		projectId: "showme-22fa9",
-		storageBucket: "showme-22fa9.appspot.com",
-		messagingSenderId: "336455638979"
-	};
-	firebase.initializeApp(config);
-	var firestore = firebase.firestore();
+// function getUserLists(username) {
+// 	// Initialize Firebase
+// 	var config = {
+// 		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+// 		authDomain: "showme-22fa9.firebaseapp.com",
+// 		databaseURL: "https://showme-22fa9.firebaseio.com",
+// 		projectId: "showme-22fa9",
+// 		storageBucket: "showme-22fa9.appspot.com",
+// 		messagingSenderId: "336455638979"
+// 	};
+// 	firebase.initializeApp(config);
+// 	var firestore = firebase.firestore();
 
-	// Get user data
-	const docRef = firestore.doc('users/' + username);
+// 	// Get user data
+// 	const docRef = firestore.doc('users/' + username);
 
-	// Retrieve likes, dislikes, saves, recs
-	var lists = ["", "", "", ""];
-	docRef.get().then(function(doc) {
-		if(doc.exists) {
-			const myData = doc.data();
-			lists[0] = myData.likes
-			lists[1] = myData.dislikes
-			lists[2] = myData.saves
-			lists[3] = myData.recs
-		}
-	});
-	return lists;
-}
+// 	// Retrieve likes, dislikes, saves, recs
+// 	var lists = ["", "", "", ""];
+// 	docRef.get().then(function(doc) {
+// 		if(doc.exists) {
+// 			const myData = doc.data();
+// 			lists[0] = myData.likes
+// 			lists[1] = myData.dislikes
+// 			lists[2] = myData.saves
+// 			lists[3] = myData.recs
+// 		}
+// 	});
+// 	return lists;
+// }
 
-// Updates username's lists to database
-function updateUserLists(username, likes, dislikes, saves, recs) {
-	// Initialize Firebase
-	var config = {
-		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-		authDomain: "showme-22fa9.firebaseapp.com",
-		databaseURL: "https://showme-22fa9.firebaseio.com",
-		projectId: "showme-22fa9",
-		storageBucket: "showme-22fa9.appspot.com",
-		messagingSenderId: "336455638979"
-	};
-	firebase.initializeApp(config);
-	var firestore = firebase.firestore();
+// // Updates username's lists to database
+// function updateUserLists(username, likes, dislikes, saves, recs) {
+// 	// Initialize Firebase
+// 	var config = {
+// 		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+// 		authDomain: "showme-22fa9.firebaseapp.com",
+// 		databaseURL: "https://showme-22fa9.firebaseio.com",
+// 		projectId: "showme-22fa9",
+// 		storageBucket: "showme-22fa9.appspot.com",
+// 		messagingSenderId: "336455638979"
+// 	};
+// 	firebase.initializeApp(config);
+// 	var firestore = firebase.firestore();
 
-	// Get user data
-	const docRef = firestore.doc('users/' + username);
+// 	// Get user data
+// 	const docRef = firestore.doc('users/' + username);
 
-	// Update likes, dislikes, saves, recs
-	var lists = ["", "", "", ""];
-	docRef.get().then(function(doc) {
-		if(doc.exists) {
-			const myData = doc.data();
-			if (likes != "") 
-				docRef.set({ likes: myData.likes+likes }); 
-			if (dislikes != "") 
-				docRef.set({ likes: myData.dislikes+dislikes }); 
-			if (saves != "") 
-				docRef.set({ likes: myData.saves+saves }); 
-			if (recs != "") {
-				docRef.set({ likes: myData.recs+recs }); 
-			}
-		}
-	});
-	return lists;
-}
+// 	// Update likes, dislikes, saves, recs
+// 	var lists = ["", "", "", ""];
+// 	docRef.get().then(function(doc) {
+// 		if(doc.exists) {
+// 			const myData = doc.data();
+// 			if (likes != "") 
+// 				docRef.set({ likes: myData.likes+likes }); 
+// 			if (dislikes != "") 
+// 				docRef.set({ likes: myData.dislikes+dislikes }); 
+// 			if (saves != "") 
+// 				docRef.set({ likes: myData.saves+saves }); 
+// 			if (recs != "") {
+// 				docRef.set({ likes: myData.recs+recs }); 
+// 			}
+// 		}
+// 	});
+// 	return lists;
+// }
 
 
 // Learning methods
