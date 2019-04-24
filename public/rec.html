@@ -191,8 +191,8 @@ function dealWithKeyboard(e) {
 	}
 }
 
+// Prints action name in corresponding cell 
 function displayAction(index, action) {
-	// Prints action name in corresponding cell for 800ms
     var x = document.getElementById("help").getElementsByTagName("td");
     setTimeout(function() { 
     	x[index].style.backgroundColor = "white"; 
@@ -352,7 +352,7 @@ function swipedetect(el, callback){
 var el = document.getElementById('help');
 swipedetect(el, function(swipedir){
     // swipedir contains either "none", "left", "right", "top", or "down"
-    var x = document.getElementById("help").getElementsByTagName("td");
+    // var x = document.getElementById("help").getElementsByTagName("td");
 	if (swipedir == "left") { 
 		displayAction(3, "dislike")
 		nextTitle("dislike")     
