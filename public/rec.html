@@ -249,19 +249,30 @@ function nextTitle() {
     const str3 = '</span></span></q></h2>';
 
     // Todo: Get recs from rec list 
-
-    // Get recs from file
-    var recs = getRecsFromFile()
-
-	var i = getRandomArbitrary(0, recs.length)
-
-	var titleInfo = recs[i].split("@")
-	var titleGenres = titleInfo[1].trim().split(",") 
-	var titleRating = titleInfo[2]
-
+	var info = getUserLists(username)
+	// var likes = info[0]
+	// var dislikes = info[1]
+	// var saves = info[2]
+	var dbrecs = info[3]
+	var titleInfo = ""
+	if (dbrecs.length != 0) {
+		alert("User's rec list is not empty")
+		var i = getRandomArbitrary(0, dbrecs.length)
+		titleInfo = dbrecs[i].split("@")
+	}
+	else {
+		alert("User's rec list is empty, pull from file")
+	    // Get recs from file
+	    var recs = getRecsFromFile()
+	    // Pull random recommendation
+		var i = getRandomArbitrary(0, recs.length)
+		titleInfo = recs[i].split("@")
+		// TODO: Adds to recommendation list
+	} 
 	updateTitle(titleInfo)
 }
 
+// Takes titleList[i].split("@")
 function updateTitle(titleInfo) {
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
@@ -299,6 +310,7 @@ function getRecsFromFile() {
 	// alert(recs)
 	return recs
 }
+
 // Swipe
 // credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
 function swipedetect(el, callback){
@@ -456,13 +468,7 @@ function getUserLists(username) {
 	return lists;
 }
 
-db_nextTitle() {
-	// Todo: Load user's recs from the database
-	recs = ""
-	if (recs.length == 0) {
-		// Load recs from text file
-	}
-}
+
 </script>
 
 
