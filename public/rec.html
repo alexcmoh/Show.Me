@@ -252,18 +252,34 @@ function nextTitle() {
 		var titles = response.split("\n")
 		// get arbitrary title from text file, build html code
 		var i = getRandomArbitrary(0, titles.length)
-		
+
 		var titleInfo = titles[i].split("@")
-		var titleGenres = titleInfo[1].trim().split(",") // for reference
+		var titleGenres = titleInfo[1].trim().split(",") 
 		var titleRating = titleInfo[2]
 
-		var result = str1.concat(titleInfo[0].trim(), str3)
-
-		// Update element on screen
-		var x = document.getElementById("help").getElementsByTagName("td")
-		x[4].innerHTML = result;
+		updateTitle(titleInfo)
 	}
 	client.send();
+}
+
+function updateTitle(titleInfo) {
+	// Formatting for title string
+    const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
+    const str3 = '</span></span></q></h2>';
+
+    // Parse titleInfo
+    var title = titleInfo[0]
+    var genres = titleInfo[1]
+    var rating = titleInfo[2]
+
+    // Update title on screen
+    var x = document.getElementById("help").getElementsByTagName("td");
+    var y = document.getElementById("titleInfo");
+    x[4].innerHTML = str1.concat(title, str3);
+    var str = title.concat("@", genres, "@", rating)
+    y.innerHTML = str;
+
+    alert(document.getElementById("titleInfo").innerHTML)
 }
 
 // Swipe
@@ -423,21 +439,12 @@ function getUserLists(username) {
 	return lists;
 }
 
-function updateLikes(username, titleInfo) {
-	// Write to database
-	// titleInfo = [title, genre, rating]
-}
-
-function updateDislikes(username, titleInfo) {
-	// Write to database
-}
-
-function updateSaves(username, titleInfo) {
-	// Write to database
-}
-
-function updateRecs(username, titleInfo) {
-	// Write to database
+db_nextTitle() {
+	// Todo: Load user's recs from the database
+	recs = ""
+	if (recs.length == 0) {
+		// Load recs from text file
+	}
 }
 </script>
 
