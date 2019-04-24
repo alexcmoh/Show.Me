@@ -347,69 +347,28 @@ function swipedetect(el, callback){
     }, false)
 }
   
-//USAGE:
+//USAGE
+// Did make changes and write body of function 
 var el = document.getElementById('help');
 swipedetect(el, function(swipedir){
     // swipedir contains either "none", "left", "right", "top", or "down"
-    // Content here is my modification
-
     var x = document.getElementById("help").getElementsByTagName("td");
 	if (swipedir == "left") { 
-		// alert("Left"); 
-		if (x[3].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[3].style.backgroundColor = "white"; 
-		    	x[3].innerHTML = "";
-			}, 800);
-		    // x[3].style.backgroundColor = "#4B80B5";
-		    x[3].innerHTML = "dislike"
-		}
-		else x[3].style.backgroundColor = "white";
-		// updateDislikes(username, titleInfo)
-		nextTitle("dislike") // nextTitle(username)
+		displayAction(3, "dislike")
+		nextTitle("dislike")     
 	}
 	else if (swipedir == "up") { 
-		// alert("Up"); 
-		if (x[1].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[1].style.backgroundColor = "white"; 
-		    	x[1].innerHTML = "";
-			}, 800);
-		    // x[1].style.backgroundColor = "#4B80B5";
-		    x[1].innerHTML = "skip"
-		}
-		else x[1].style.backgroundColor = "white";
-		nextTitle("skip")  // nexTitle(username)
+		displayAction(1, "skip")
+		nextTitle("skip")     
     }
 	else if (swipedir == "right") { 
-		// alert("Right"); 
-		if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[5].style.backgroundColor = "white"; 
-		    	x[5].innerHTML = "";
-			}, 800);
-		    // x[5].style.backgroundColor = "#4B80B5";
-		    x[5].innerHTML = "like"
-		}
-		else x[5].style.backgroundColor = "white";
-		// updateLikes(username, titleInfo)
+		displayAction(5, "like")
 		nextTitle("like")     
 	}
 	else if (swipedir == "down") { 
-		// alert("Down"); 
-		if (x[7].style.backgroundColor != "rgb(97, 110, 123)") {
-		    setTimeout(function() { 
-		    	x[7].style.backgroundColor = "white"; 
-		    	x[7].innerHTML = "";
-			}, 800);
-		    // x[7].style.backgroundColor = "#4B80B5";
-		    x[7].innerHTML = "save"
-		}
-		else x[7].style.backgroundColor = "white";
-		// updateSaves(username)
-		nextTitle("save")  // nextTitle(username)
+		displayAction(7, "save")
+		nextTitle("save")     
 	}
-    // el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
 });
 
 </script>
