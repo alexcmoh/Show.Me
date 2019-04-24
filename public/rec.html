@@ -241,7 +241,7 @@ function nextTitle() {
 
 	// Request file from server
 	var client = new XMLHttpRequest();
-	client.open('GET', '/../titles.txt', false);
+	client.open('GET', 'titles.txt', false);
 	client.onreadystatechange = function() {
 		// alert(client.responseText);
 		var response = client.responseText;
@@ -251,10 +251,10 @@ function nextTitle() {
 		
 		var titleInfo = titles[i].split("@")
 		var titleGenres = titleInfo[1].trim().split(",") // for reference
-		var titleRating = titleInfo[2] // for reference
+		var titleRating = titleInfo[2]
 
 		var result = str1.concat(titleInfo[0].trim(), str3)
-		
+
 		// Update element on screen
 		var x = document.getElementById("help").getElementsByTagName("td")
 		x[4].innerHTML = result;
@@ -419,6 +419,21 @@ function getUserLists(username) {
 	return lists;
 }
 
+function updateLikes(username) {
+	// Write to database
+}
+
+function updateDislikes(username) {
+	// Write to database
+}
+
+function updateSaves(username) {
+	// Write to database
+}
+
+function updateRecs(username) {
+	// Write to database
+}
 </script>
 
 
