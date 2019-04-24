@@ -71,6 +71,10 @@ h2 {
 	display: block;
 }
 
+.hidden { 
+	font-size: 0; 
+}
+
 </style>
 
 <html>
@@ -116,8 +120,7 @@ h2 {
 
 			<td style="width: 500px; height: 80px;">
 
-			<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">The Lobster (2015)
-			</span></span></q></h2> 
+			<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;</span></span></q></h2> 
 			</td>
 
 			<td style="text-align: center; width: 35">&nbsp;</td>
@@ -130,7 +133,7 @@ h2 {
 	</tbody>
 </table>
 </div>
-
+<div class="hidden" id="titleInfo">EMPTY</div>
 <p>&nbsp;</p>
 </body>
 </html>
@@ -140,6 +143,8 @@ h2 {
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
 
 <script>
+
+nextTitle()
 
 window.addEventListener("keyup", dealWithKeyboard, true);
  
@@ -243,23 +248,18 @@ function nextTitle() {
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
     const str3 = '</span></span></q></h2>';
 
-	// Request file from server
-	var client = new XMLHttpRequest();
-	client.open('GET', 'titles.txt', false);
-	client.onreadystatechange = function() {
-		// alert(client.responseText);
-		var response = client.responseText;
-		var titles = response.split("\n")
-		// get arbitrary title from text file, build html code
-		var i = getRandomArbitrary(0, titles.length)
+    // Todo: Get recs from rec list 
 
-		var titleInfo = titles[i].split("@")
-		var titleGenres = titleInfo[1].trim().split(",") 
-		var titleRating = titleInfo[2]
+    // Get recs from file
+    var recs = getRecsFromFile()
 
-		updateTitle(titleInfo)
-	}
-	client.send();
+	var i = getRandomArbitrary(0, recs.length)
+
+	var titleInfo = recs[i].split("@")
+	var titleGenres = titleInfo[1].trim().split(",") 
+	var titleRating = titleInfo[2]
+
+	updateTitle(titleInfo)
 }
 
 function updateTitle(titleInfo) {
@@ -282,6 +282,23 @@ function updateTitle(titleInfo) {
     alert(document.getElementById("titleInfo").innerHTML)
 }
 
+function getRecsFromFile() {
+	var recs = [];
+	// Request file from server
+	var client = new XMLHttpRequest();
+	client.open('GET', 'titles.txt', false);
+	client.onreadystatechange = function() {
+		// alert(client.responseText);
+		var response = client.responseText;
+		var titles = response.split("\n")
+		for (var i = 0; i < titles.length; i++) {
+			recs.push(titles[i])
+		}
+	}
+	client.send();
+	// alert(recs)
+	return recs
+}
 // Swipe
 // credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
 function swipedetect(el, callback){
