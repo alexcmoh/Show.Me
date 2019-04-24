@@ -98,10 +98,8 @@ p {
 		<a href="#saved">My Saved Titles</a>
 	</div>
 <div class="dropdown">
-	<button onclick="myFunction1()" class="dropbtn">&#10754</button>
-	<div id="myDropdown1" class="dropdown-content">
-		<a href="{% url '/' %}">Log out</a>
-	</div>
+	<button onclick="logout()" class="dropbtn">&#10754</button>
+
 </div>
 
 <p>
@@ -109,6 +107,10 @@ p {
 	<br><p><b>logged in as: </b></p> <p id="printName"></p>
 	<script>
 		document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+		function logout() {
+			window.localStorage.setItem('currentUser', "");
+			window.location.replace("/");
+		}
 	</script><br><br>
 
 <p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p><br>
