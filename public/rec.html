@@ -390,7 +390,7 @@ swipedetect(el, function(swipedir){
 
 <script type="text/javascript">
 
-// var info = getUserLists(username)
+// var info = getUserLists(window.localStorage.getItem('currentUser'))
 // var likes = info[0]
 // var dislikes = info[1]
 // var saves = info[2]
@@ -411,11 +411,11 @@ function getUserLists(username) {
 	var firestore = firebase.firestore();
 
 	// Get user data
-	const docLogRef = firestore.doc('users/' + username);
+	const docRef = firestore.doc('users/' + username);
 
 	// Retrieve likes, dislikes, saves, recs
 	var lists = ["", "", "", ""];
-	docLogRef.get().then(function(doc) {
+	docRef.get().then(function(doc) {
 		if(doc.exists) {
 			const myData = doc.data();
 			lists[0] = myData.likes
