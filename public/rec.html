@@ -268,6 +268,8 @@ function nextTitle() {
 		alert("User's rec list is empty, pull from file")
 	    // Get recs from file
 	    var recs = getRecsFromFile()
+	    // Load all recs into database
+	    updateUserLists(window.localStorage.getItem('currentUser'), "", "", "", recs)
 	    // Pull random recommendation
 		var i = getRandomArbitrary(0, recs.length)
 		titleInfo = recs[i].split("@")
@@ -472,6 +474,44 @@ function getUserLists(username) {
 			lists[1] = myData.dislikes
 			lists[2] = myData.saves
 			lists[3] = myData.recs
+		}
+	});
+	return lists;
+}
+
+function updateUserLists(username, likes, dislikes, saves, recs) {
+	// Initialize Firebase
+	var config = {
+		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+		authDomain: "showme-22fa9.firebaseapp.com",
+		databaseURL: "https://showme-22fa9.firebaseio.com",
+		projectId: "showme-22fa9",
+		storageBucket: "showme-22fa9.appspot.com",
+		messagingSenderId: "336455638979"
+	};
+	firebase.initializeApp(config);
+	var firestore = firebase.firestore();
+
+	// Get user data
+	const docRef = firestore.doc('users/' + username);
+
+	// Retrieve likes, dislikes, saves, recs
+	var lists = ["", "", "", ""];
+	docRef.get().then(function(doc) {
+		if(doc.exists) {
+			const myData = doc.data();
+			if (likes != "") {
+				myData.likes = likes
+			}
+			if (dislikes != "") {
+				myData.dislikes = dislikes
+			}
+			if (saves != "") {
+				myData.saves = saves
+			}
+			if (recs != "") {
+				myData.likes = recs
+			}
 		}
 	});
 	return lists;
