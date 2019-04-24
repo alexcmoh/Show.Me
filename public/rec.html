@@ -82,7 +82,9 @@ h2 {
 </style>
 
 <html> <!-- ! Important for mobile view -->
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <head><title>show.me recommendations</title></head>
 
 <body>
@@ -246,33 +248,34 @@ function getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-function nextTitle() {
+function nextTitle(action) {
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
     const str3 = '</span></span></q></h2>';
 
-    // Load user's recs list from database
-	var info = getUserLists(window.localStorage.getItem('currentUser'));
-	// var likes = info[0]
-	// var dislikes = info[1]
-	// var saves = info[2]
-	var dbrecs = info[3]
-	var titleInfo = ""
-	if (dbrecs.length != 0) {
-		alert("User's rec list is not empty")
-		var i = getRandomArbitrary(0, dbrecs.length)
-		titleInfo = dbrecs[i].split("@")
-	}
-	else {
-		alert("User's rec list is empty, pull from file")
+    // Get recs from rec list 
+    var trainData = getRecsFromFile()
+    var sortedList = knn(trainData.join("\n"));
+    var titleInfo = ""
+    if (sortedList.length == 0 || action != "like")
+    {
+    	// alert("Get recs from file")
 	    // Get recs from file
 	    var recs = getRecsFromFile()
-	    // Load all recs into database
-	    updateUserLists(window.localStorage.getItem('currentUser'), "", "", "", recs)
-	    // Pull random recommendation
 		var i = getRandomArbitrary(0, recs.length)
 		titleInfo = recs[i].split("@")
-	} 
+		var titleGenres = titleInfo[1].trim().split(",") 
+		var titleRating = titleInfo[2]
+	}
+	else
+	{
+		alert("Get recs from first 0.5% of sortedList: ".concat(sortedList))
+		// Pick from start of sorted list
+		var i = getRandomArbitrary(0, Math.floor(sortedList.length*0.005));
+		titleInfo = sortedList[i].split("@")
+	}
+
+	// Update screen
 	updateTitle(titleInfo)
 }
 
@@ -507,29 +510,103 @@ function updateUserLists(username, likes, dislikes, saves, recs) {
 	return lists;
 }
 
-function userAction(username, action, titleInfo)
-{
-	if (action == "like")
-	{
-		updateUserLists(username, titleInfo, "", "", "");
+
+// Learning methods
+function knn(trainData) {
+
+	var titleInfo = document.getElementById("titleInfo").innerHTML.trim()
+	// alert("KNN: ".concat(titleInfo))
+	var smartRecs = []
+	if (typeof(trainData) == typeof(titleInfo) && titleInfo != "EMPTY") {
+		var trainInfo = trainData.split("\n")
+		// Build recommendations based in titleInfo
+		var scores = []
+		for (var i = 0; i < trainInfo.length; i++)
+		{
+			var x = titleInfo.trim().split("@")
+			var y = trainInfo[i].trim().split("@")
+			
+			var d = distance(x[0].toLowerCase(), y[0].toLowerCase(), " ")
+			var d1 = distance(x[1].toLowerCase(), y[1].toLowerCase(), ",")
+			if (x[2] != 0)
+			{
+				// weight by rating
+				d = d*parseFloat(y[2]) 
+				d1 = d1*parseFloat(y[2])
+			}
+			var score = d + d1 // max theoretical value is 20
+			// alert(titleInfo.concat("\n", trainInfo[i], "\nSCORE=", score))
+			if (x[0] != y[0])
+				insertSort(smartRecs, scores, trainInfo[i], score)
+			// alert(smartRecs)
+		}
+		// alert(smartRecs)
 	}
-	else if (action == "dislike")
-	{
-		updateUserLists(username, "", titleInfo, "", "");
-	}
-	else if (action == "save")
-	{
-		updateUserLists(username, "", "", titleInfo, "");
-	}
-	else
-	{
-		// Default skip 
-	}
-	updateTitle()
-	// remove nextTitle in swipe and keyboard sections
-	// and replace with call to userAction(...)
+	// updateUserLists(username, likes, dislikes, saves, recs)
+	return smartRecs
 }
 
+// Sorted insertion in asecnding order by score
+function insertSort(smartRecs, scores, newTitle, newScore) {
+	// If list is empty
+	if (smartRecs.length == 0) {
+		smartRecs.push(newTitle)
+		scores.push(newScore)
+		return [smartRecs, scores]
+	}
+	// General case
+	for (var i = 0; i < smartRecs.length; i++) {
+		if (newScore >= scores[i]) {
+			smartRecs.splice(i, 0, newTitle)
+			scores.splice(i, 0, newScore)
+			return [smartRecs, scores]
+		}
+	}
+	// If smallest
+	smartRecs.push(newTitle)
+	scores.push(newScore)
+	return [smartRecs, scores]
+}
+
+// Compute Jaccard index of two strings
+function distance(x, y, delim) {
+	var xlist = x.trim().split(delim)
+	var ylist = y.trim().split(delim)
+	
+	var num = intersection(xlist, ylist)
+	var total = xlist.length + ylist.length
+	
+	var index = num / total
+	// alert("Index:".concat(index))
+
+	return index
+}
+
+// Find # intersection between two arrays of words 
+function intersection(list1, list2) {
+	var longerList = list1
+	var shorterList = list2
+	if (list2.length > list1.length) {
+		longerList = list2
+		shorterList = list1
+	}
+	var numIntersections = 0
+	for (var i = 0; i < longerList.length; i++)
+	{
+		var str1 = longerList[i]
+		var isIntersection = 0
+		for (var j = 0; j < shorterList.length; j++)
+		{
+			var str2 = shorterList[j]
+			if (str1 == str2) 
+				isIntersection = 1
+			// alert("COMPARING-".concat(str1, "-AND-", str2, "-INT-", isIntersection))
+		}
+		numIntersections += isIntersection
+	}
+	// alert("end of intersection")
+	return numIntersections
+}
 
 </script>
 
