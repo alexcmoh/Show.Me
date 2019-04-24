@@ -311,6 +311,7 @@ window.onclick = function(event) {
 				location.reload();
 			}
 			else {
+				window.localStorage.setItem('currentUser', userSave);
 				docRef.set({
 					password: passSave,
 					username: userSave,
@@ -352,6 +353,7 @@ window.onclick = function(event) {
 			if(doc.exists) {
 				const myData = doc.data();
 				if(myData.username == userCheck && myData.password == passCheck) {
+					window.localStorage.setItem('currentUser', userCheck);
 					window.location.replace("rec.html");
 				}
 				else {
