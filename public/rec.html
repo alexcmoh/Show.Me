@@ -100,7 +100,7 @@ p {
 <div class="dropdown">
 	<button onclick="myFunction1()" class="dropbtn">&#10754</button>
 	<div id="myDropdown1" class="dropdown-content">
-		<a href="{% url 'index.html' %}">Log out</a>
+		<a href="{% url '/' %}">Log out</a>
 	</div>
 </div>
 
@@ -108,7 +108,7 @@ p {
 
 	<br><p><b>logged in as: </b></p> <p id="printName"></p>
 	<script>
-	document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+		document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
 	</script><br><br>
 
 <p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p><br>
