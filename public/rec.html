@@ -26,6 +26,10 @@ h2 {
 	display: inline;
 }
 
+p {
+	display: inline;
+}
+
 /* Menu and logout buttons */
 .dropbtn {
   background-color: white;
@@ -96,23 +100,18 @@ h2 {
 <div class="dropdown">
 	<button onclick="myFunction1()" class="dropbtn">&#10754</button>
 	<div id="myDropdown1" class="dropdown-content">
-		<a href="{% url 'logout' %}">Log out</a>
+		<a href="{% url 'index.html' %}">Log out</a>
 	</div>
 </div>
 
 <p>
-<b>logged in as: </b> 
-{% block content %}
-	{% if user.is_authenticated %}
-		{{ user.username }}
-	{% else %}
-	you are not logged in
-	<br>your likes will not be saved
-	{% endif %}
-{% endblock %}
-</p>
 
-<p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p>
+	<br><p><b>logged in as: </b></p> <p id="printName"></p>
+	<script>
+	document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+	</script><br><br>
+
+<p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p><br>
 <!-- Main table for title -->
 <table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
 	<tbody>
