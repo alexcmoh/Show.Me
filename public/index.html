@@ -61,6 +61,35 @@ span.psw {
   padding-top: 16px;
 }
 
+h2 {
+  display: inline-block;
+}
+/*tooltip css from tutorial*/
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  /*width: 120px;*/
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  border-radius: 12px;
+  padding: 5px;
+  font-size: 12px;
+
+  /* Position the tooltip */
+  position: fixed;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 /* The Modal (background) */
 .modal {
   margin: 0;
@@ -144,7 +173,12 @@ span.psw {
 <div class="center">
 
   <h2>show.me</h2>
-  Login or register to start getting movie and TV show recommendations. 
+    <div class="tooltip">&#9432;
+  <span class="tooltiptext">
+  show.me is a movie recommendation system for mobile and desktop. Swipe (mobile) or use the arrow keys (desktop) to like, dislike, or skip a given movie title. New recommendations will be made based on your like history.</span>
+</div>
+
+  <br>Login or register to start getting movie and TV show recommendations. 
   <br><br>
 
   <button onclick="document.getElementById('id00').style.display='block'" style="width:auto;">Register</button>
