@@ -241,14 +241,20 @@ function nextTitle() {
 
 	// Request file from server
 	var client = new XMLHttpRequest();
-	client.open('GET', 'titles.txt', false);
+	client.open('GET', '/../titles.txt', false);
 	client.onreadystatechange = function() {
 		// alert(client.responseText);
 		var response = client.responseText;
-		var titles = response.split(",")
+		var titles = response.split("\n")
 		// get arbitrary title from text file, build html code
 		var i = getRandomArbitrary(0, titles.length)
-		var result = str1.concat(titles[i].trim(), str3)
+		
+		var titleInfo = titles[i].split("@")
+		var titleGenres = titleInfo[1].trim().split(",") // for reference
+		var titleRating = titleInfo[2] // for reference
+
+		var result = str1.concat(titleInfo[0].trim(), str3)
+		
 		// Update element on screen
 		var x = document.getElementById("help").getElementsByTagName("td")
 		x[4].innerHTML = result;
