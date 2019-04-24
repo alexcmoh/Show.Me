@@ -253,7 +253,7 @@ function nextTitle() {
     const str3 = '</span></span></q></h2>';
 
     // Todo: Get recs from rec list 
-	var info = getUserLists(username)
+	var info = getUserLists(window.localStorage.getItem('currentUser'));
 	// var likes = info[0]
 	// var dislikes = info[1]
 	// var saves = info[2]
