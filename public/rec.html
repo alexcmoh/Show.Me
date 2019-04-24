@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 
 <style type="text/css">
+body {font-family: Arial, Helvetica, sans-serif; background-color: white}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 300px; 
+}
 
 body {
-	font-family: Arial, Helvetica, sans-serif; 
-	background-color: white
+	background-color: white;
 }
 
 td {
@@ -16,18 +26,7 @@ h2 {
 	display: inline;
 }
 
-/* All content are in center div */
-.center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  width: 300px; 
-}
-
-/* Button formatting */
+/* Menu and logout buttons */
 .dropbtn {
   background-color: white;
   color: black;
@@ -66,60 +65,56 @@ h2 {
   font-size: 12px;
 }
 
-.dropdown a:hover {
-	background-color: #ddd;
-}
+.dropdown a:hover {background-color: #ddd;}
 
-/* Visibility */
-.show {
-	display: block;
-}
+.show {display: block;}
 
-.hidden { 
-	font-size: 0; 
-}
+.hidden { font-size: 0; }
 
 </style>
 
-<html> <!-- ! Important for mobile view -->
-
+<html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<title>show.me recommendations</title>
+</head>
 
-<head><title>show.me recommendations</title></head>
+<!-- Body -->
 
 <body>
 
-	<!-- start center div -->
-	<div class="center"> 
-	<h2>show.me</h2> &nbsp; 
+<div class="center">
+<h2>show.me</h2> &nbsp; 
 
-	<!-- dropdown menus -->
-	<div class="dropdown">
+<div class="dropdown">
 	<button onclick="myFunction()" class="dropbtn">&#9776</button>
-		<div id="myDropdown" class="dropdown-content">
-			<a href="/recs">Recommendations</a>
-			<a href="/likes">My Liked Titles</a>
-			<a href="/dislikes">My Disliked Titles</a>
-			<a href="/saves">My Saved Titles</a>
-		</div>
+	<div id="myDropdown" class="dropdown-content">
+		<a href="/rec">Recommendations</a>
+		<a href="/likes">My Liked Titles</a>
+		<a href="#saved">My Saved Titles</a>
+	</div>
+<div class="dropdown">
+	<button onclick="myFunction1()" class="dropbtn">&#10754</button>
+	<div id="myDropdown1" class="dropdown-content">
+		<a href="{% url 'logout' %}">Log out</a>
+	</div>
+</div>
 
-		<div class="dropdown">
-			<button onclick="myFunction1()" class="dropbtn">&#10754</button>
-			<div id="myDropdown1" class="dropdown-content">
-			<a href="/">Log out</a>
-			</div>
-		</div>
+<p>
+<b>logged in as: </b> 
+{% block content %}
+	{% if user.is_authenticated %}
+		{{ user.username }}
+	{% else %}
+	you are not logged in
+	<br>your likes will not be saved
+	{% endif %}
+{% endblock %}
+</p>
 
-	<p><b>logged in as: </b></p> <p id="printName"></p>
-
-	<script>
-	document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
-	</script>
-
-	<p>Use arrows or swipe. Right to like, left to discard, down to save, up to skip.</p>
-
-	<!-- title table -->
-	<table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
+<p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p>
+<!-- Main table for title -->
+<table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
 	<tbody>
 		<tr>
 			<td style="text-align: center;">&nbsp;</td>
@@ -128,8 +123,12 @@ h2 {
 		</tr>
 		<tr>
 			<td style="text-align: center; width: 35">&nbsp;</td>
+
 			<td style="width: 500px; height: 80px;">
-			<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">&nbsp;</span></span></q></h2></td>
+
+			<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;" id="title">&nbsp;</span></span></q></h2> 
+			</td>
+
 			<td style="text-align: center; width: 35">&nbsp;</td>
 		</tr>
 		<tr>
@@ -138,29 +137,23 @@ h2 {
 			<td style="text-align: center;">&nbsp;</td>
 		</tr>
 	</tbody>
-	</table>
-
-	</div>  
-	<!-- ends center div -->
-
-	<!-- hidden information -->
-	<div class="hidden" id="titleInfo">EMPTY</div> 
-	<p>&nbsp;</p>
-
+</table>
+</div>
+<div class="hidden" id="titleInfo">EMPTY</div>
+<div class="hidden" id="pastRecs">EMPTY</div>
+<p>&nbsp;</p>
 </body>
-
 </html>
 
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
+<!-- Script -->
 
 <script>
 
-nextTitle("skip"); // when window first loads
+nextTitle("skip")
 
-// Keyboard listener
+// Window event listener
 window.addEventListener("keyup", dealWithKeyboard, true);
+
 function dealWithKeyboard(e) {
 	// Key press
 	var x = document.getElementById("help").getElementsByTagName("td");
@@ -191,8 +184,8 @@ function dealWithKeyboard(e) {
 	}
 }
 
-// Prints action name in corresponding cell 
 function displayAction(index, action) {
+	// Prints action name in corresponding cell for 800ms
     var x = document.getElementById("help").getElementsByTagName("td");
     setTimeout(function() { 
     	x[index].style.backgroundColor = "white"; 
@@ -201,7 +194,8 @@ function displayAction(index, action) {
     x[index].innerHTML = action;
 }
 
-/* Toggle menu and logout menu buttons */
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
@@ -227,6 +221,8 @@ function getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+// var trainData = "Fixed Bayonets! @ Action,Drama,War @ 7.0 \n  Union Station @ Crime,Drama,Film-Noir @ 6.8 \n  Crash Dive @ Action,Adventure,Drama @ 6.4 "
+
 function nextTitle(action) {
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
@@ -236,9 +232,9 @@ function nextTitle(action) {
     var trainData = getRecsFromFile()
     var sortedList = knn(trainData.join("\n"));
     var titleInfo = ""
-    if (sortedList.length == 0 || action != "like")
+    if (sortedList.length == 0 || action.trim() != "like") 
     {
-    	alert("Get recs from file")
+    	// alert("Get recs from file")
 	    // Get recs from file
 	    var recs = getRecsFromFile()
 		var i = getRandomArbitrary(0, recs.length)
@@ -248,18 +244,39 @@ function nextTitle(action) {
 	}
 	else
 	{
-		alert("Get recs from first 0.5% of sortedList: ".concat(sortedList))
+		// alert("Get recs from first 0.5% of sortedList: ".concat(sortedList))
 		// Pick from start of sorted list
-		var i = getRandomArbitrary(0, Math.floor(sortedList.length*0.005));
+		var i = getRandomArbitrary(0, Math.floor(sortedList.length*0.001));
 		titleInfo = sortedList[i].split("@")
+		var historyInfo = document.getElementById("pastRecs")
+		if (historyInfo.innerHTML.includes(sortedList[i].split("@")[0].trim())) 
+		{
+			// alert(sortedList[i].concat(" already in history"))
+			i = getRandomArbitrary(0, Math.floor(sortedList.length*0.02));
+			titleInfo = sortedList[i].split("@")
+		}
 	}
+
+	// Updates rec history in this session
+	var history = document.getElementById("pastRecs")
+	if (history.innerHTML == "EMPTY")
+	{
+		history.innerHTML = titleInfo;
+	}
+	else
+	{
+		var temp = history.innerHTML 
+		temp = temp.concat("\n", titleInfo)
+		history.innerHTML = temp;
+	}
+
+	// alert("History: ".concat(history.innerHTML))
 
 	// Update screen
 	updateTitle(titleInfo)
 }
 
-// Takes titleList[i].split("@")
-// called every time an action is performed
+// Updates title on window, and hidden titleInfo
 function updateTitle(titleInfo) {
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
@@ -272,22 +289,22 @@ function updateTitle(titleInfo) {
 
     // Update title on screen
     var x = document.getElementById("help").getElementsByTagName("td");
-    x[4].innerHTML = str1.concat(title, str3);
-    // Updates hidden titleInfo
     var y = document.getElementById("titleInfo");
+    x[4].innerHTML = str1.concat(title, str3);
     var str = title.concat("@", genres, "@", rating)
     y.innerHTML = str;
 
-    alert(document.getElementById("titleInfo").innerHTML)
+    // alert(document.getElementById("titleInfo").innerHTML)
 }
 
+
 function getRecsFromFile() {
-	// Returns list of movie titleInfo strings
 	var recs = [];
 	// Request file from server
 	var client = new XMLHttpRequest();
 	client.open('GET', 'titles.txt', false);
 	client.onreadystatechange = function() {
+		// alert(client.responseText);
 		var response = client.responseText;
 		var titles = response.split("\n")
 		for (var i = 0; i < titles.length; i++) {
@@ -295,11 +312,13 @@ function getRecsFromFile() {
 		}
 	}
 	client.send();
+	// alert(recs)
 	return recs
 }
 
 // Swipe
 // credit: http://www.javascriptkit.com/javatutors/touchevents2.shtml
+// Did not write or make changes to this code
 function swipedetect(el, callback){
   
     var touchsurface = el,
@@ -352,7 +371,7 @@ function swipedetect(el, callback){
 var el = document.getElementById('help');
 swipedetect(el, function(swipedir){
     // swipedir contains either "none", "left", "right", "top", or "down"
-    // var x = document.getElementById("help").getElementsByTagName("td");
+    var x = document.getElementById("help").getElementsByTagName("td");
 	if (swipedir == "left") { 
 		displayAction(3, "dislike")
 		nextTitle("dislike")     
@@ -371,107 +390,55 @@ swipedetect(el, function(swipedir){
 	}
 });
 
-</script>
-
-
-<script type="text/javascript">
-
-// Retrieves username's lists from database
-// function getUserLists(username) {
-// 	// Initialize Firebase
-// 	var config = {
-// 		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-// 		authDomain: "showme-22fa9.firebaseapp.com",
-// 		databaseURL: "https://showme-22fa9.firebaseio.com",
-// 		projectId: "showme-22fa9",
-// 		storageBucket: "showme-22fa9.appspot.com",
-// 		messagingSenderId: "336455638979"
-// 	};
-// 	firebase.initializeApp(config);
-// 	var firestore = firebase.firestore();
-
-// 	// Get user data
-// 	const docRef = firestore.doc('users/' + username);
-
-// 	// Retrieve likes, dislikes, saves, recs
-// 	var lists = ["", "", "", ""];
-// 	docRef.get().then(function(doc) {
-// 		if(doc.exists) {
-// 			const myData = doc.data();
-// 			lists[0] = myData.likes
-// 			lists[1] = myData.dislikes
-// 			lists[2] = myData.saves
-// 			lists[3] = myData.recs
-// 		}
-// 	});
-// 	return lists;
-// }
-
-// // Updates username's lists to database
-// function updateUserLists(username, likes, dislikes, saves, recs) {
-// 	// Initialize Firebase
-// 	var config = {
-// 		apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-// 		authDomain: "showme-22fa9.firebaseapp.com",
-// 		databaseURL: "https://showme-22fa9.firebaseio.com",
-// 		projectId: "showme-22fa9",
-// 		storageBucket: "showme-22fa9.appspot.com",
-// 		messagingSenderId: "336455638979"
-// 	};
-// 	firebase.initializeApp(config);
-// 	var firestore = firebase.firestore();
-
-// 	// Get user data
-// 	const docRef = firestore.doc('users/' + username);
-
-// 	// Update likes, dislikes, saves, recs
-// 	var lists = ["", "", "", ""];
-// 	docRef.get().then(function(doc) {
-// 		if(doc.exists) {
-// 			const myData = doc.data();
-// 			if (likes != "") 
-// 				docRef.set({ likes: myData.likes+likes }); 
-// 			if (dislikes != "") 
-// 				docRef.set({ likes: myData.dislikes+dislikes }); 
-// 			if (saves != "") 
-// 				docRef.set({ likes: myData.saves+saves }); 
-// 			if (recs != "") {
-// 				docRef.set({ likes: myData.recs+recs }); 
-// 			}
-// 		}
-// 	});
-// 	return lists;
-// }
-
-
 // Learning methods
 function knn(trainData) {
 
 	var titleInfo = document.getElementById("titleInfo").innerHTML.trim()
-	// alert("KNN: ".concat(titleInfo))
+	var likes = getFromLikes()
+
+	// If likes list is empty, add directly
+	if (likes.length == 0)
+		likes = titleInfo
+	// Else concat
+	if (likes.length != 0 && titleInfo != "EMPTY")
+		likes = likes.concat(" \n ", titleInfo)
+	
+	// Build smartRecs and associated scores array
+	var likeInfo = likes.split("\n")
 	var smartRecs = []
 	if (typeof(trainData) == typeof(titleInfo) && titleInfo != "EMPTY") {
-		var trainInfo = trainData.split("\n")
 		// Build recommendations based in titleInfo
-		var scores = []
+		var trainInfo = trainData.split("\n")
+		var scores = [] // used to insert-sort entries into smartRecs
+
+		// For each title in titlelist, compute average score
 		for (var i = 0; i < trainInfo.length; i++)
 		{
-			var x = titleInfo.trim().split("@")
+			// Get average score for the entry
+			var score = 0
+			var alreadyLiked = 0
 			var y = trainInfo[i].trim().split("@")
-			
-			var d = distance(x[0].toLowerCase(), y[0].toLowerCase(), " ")
-			var d1 = distance(x[1].toLowerCase(), y[1].toLowerCase(), ",")
-			if (x[2] != 0)
-			{
-				// weight by rating
-				d = d*parseFloat(y[2]) 
-				d1 = d1*parseFloat(y[2])
+			for (var j = 0; j < likeInfo.length; j++) {
+				var x = likeInfo[j].split("@")
+				var d = distance(x[0].toLowerCase(), y[0].toLowerCase(), " ")
+				var d1 = distance(x[1].toLowerCase(), y[1].toLowerCase(), ",")
+
+				// Scale score by entry's rating
+				if (x[2] != 0)
+				{
+					d = d*parseFloat(y[2]) 
+					d1 = d1*parseFloat(y[2])
+					score += d + d1 
+				}
+
+				// Check to avoid repeated recommendation
+				if (x == y)
+					alreadyLiked = 1
 			}
-			var score = d + d1 // max theoretical value is 20
-			// alert(titleInfo.concat("\n", trainInfo[i], "\nSCORE=", score))
-			if (x[0] != y[0])
+
+			// Insert-sort into the list
+			if (alreadyLiked == 0) 
 				insertSort(smartRecs, scores, trainInfo[i], score)
-			// alert(smartRecs)
 		}
 		// alert(smartRecs)
 	}
@@ -506,13 +473,10 @@ function distance(x, y, delim) {
 	var xlist = x.trim().split(delim)
 	var ylist = y.trim().split(delim)
 	
-	var num = intersection(xlist, ylist)
-	var total = xlist.length + ylist.length
+	var num = intersection(xlist, ylist) 
+	var total = xlist.length + ylist.length 
 	
-	var index = num / total
-	// alert("Index:".concat(index))
-
-	return index
+	return (num/total)
 }
 
 // Find # intersection between two arrays of words 
@@ -541,18 +505,32 @@ function intersection(list1, list2) {
 	return numIntersections
 }
 
-function writeToLikes(titleInfo) {
-	// TODO
-	// 1. Retrieve user's likes list from database (call getFromLikes)
-	// 2. Append "@" + titleInfo to likes list
-	// 3. Write updated likes list back to database
-}
-
 function getFromLikes() {
 	// TODO
 	// 1. Retrieve user's likes list from database
 	// 2. Return this; this will be a string
+	// Temporary code
+	var likes = " Leaves From Satan's Book @ Drama @ 6.8 \n Dr. Jekyll and Mr. Hyde @ Drama,Horror,Sci-Fi @ 7.0 \n The Golem @ Fantasy,Horror @ 7.2 \n The Last of the Mohicans @ Action,Adventure,Drama @ 6.9  \n The Mark of Zorro @ Adventure,Romance,Western @ 7.2 \n The Penalty @ Crime,Drama,Horror @ 7.5  \n The Saphead @ Comedy @ 6.2 \n Way Down East @ Drama,Romance @ 7.8"
+
+	var likes1 = " If I Had a Million @ Comedy,Drama @ 7.1 \n Jewel Robbery @ Comedy,Crime,Romance @ 7.4 \n Love Me Tonight @ Comedy,Musical,Romance @ 7.7 \n The Mask of Fu Manchu @ Adventure,Horror,Sci-Fi @ 6.4 \n Mata Hari @ Crime,Drama,Romance @ 6.7 \n The Most Dangerous Game @ Action,Adventure,Thriller @ 7.2 \n Movie Crazy @ Comedy,Family,Romance @ 7.2 \n The Mummy @ Fantasy,Horror @ 7.2 \n Murders in the Rue Morgue @ Crime,Horror,Mystery @ 6.4"
+	
+	var likes0 = ""; // empty case
+
+	return likes0
 }
+
+// function writeToLikes(titleInfo) {
+// 	// TODO
+// 	// 1. Retrieve user's likes list from database (call getFromLikes)
+// 	// 2. Append "@" + titleInfo to likes list
+// 	// 3. Write updated likes list back to database
+// }
+
+// function getFromLikes() {
+// 	// TODO
+// 	// 1. Retrieve user's likes list from database
+// 	// 2. Return this; this will be a string
+// }
 
 </script>
 
