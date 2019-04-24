@@ -209,15 +209,8 @@ function dealWithKeyboard(e) {
 	}
 	else if (e.keyCode == 32) { 
 		// alert("Space"); 
-		if (x[4].style.backgroundColor != "rgb(97, 110, 123)") {
-		    // x[4].innerHTML = "In a dystopian near future, single people, according to the laws of The City, are taken to The Hotel, where they are obliged to find a romantic partner in forty-five days or are transformed into beasts and sent off into The Woods."
-		    setTimeout(function() { x[4].style.backgroundColor = "white"; }, 800);
-		    x[4].style.backgroundColor = "#4B80B5";
-		}
-		else {
-			x[4].style.backgroundColor = "white";
-			// x[4].innerHTML = "Title here"
-		}
+		var info = document.getElementById("titleInfo")
+		alert(info.innerHTML)
 	} 
 }
 
@@ -426,11 +419,6 @@ swipedetect(el, function(swipedir){
 		else x[7].style.backgroundColor = "white";
 		// updateSaves(username)
 		nextTitle()  // nextTitle(username)
-	}
-	else if (e.keyCode == 32)
-	{
-		var info = document.getElementById("titleInfo")
-		alert(info.innerHTML)
 	}
     // el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
 });
