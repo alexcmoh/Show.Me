@@ -156,7 +156,7 @@ h2 {
 
 <script>
 
-nextTitle() 
+nextTitle("skip") 
 
 window.addEventListener("keyup", dealWithKeyboard, true);
  
@@ -174,7 +174,7 @@ function dealWithKeyboard(e) {
 		    x[3].innerHTML = "dislike"
 		}
 		else x[3].style.backgroundColor = "white";
-		nextTitle()     
+		nextTitle("dislike")     
 	}
 	else if (e.keyCode == 38) { 
 		// alert("Up"); 
@@ -187,7 +187,7 @@ function dealWithKeyboard(e) {
 		    x[1].innerHTML = "skip"
 		}
 		else x[1].style.backgroundColor = "white";
-		nextTitle()     
+		nextTitle("skip")     
     }
 	else if (e.keyCode == 39) { 
 		// alert("Right"); 
@@ -200,7 +200,7 @@ function dealWithKeyboard(e) {
 		    x[5].innerHTML = "like"
 		}
 		else x[5].style.backgroundColor = "white";
-		nextTitle()     
+		nextTitle("like")     
 	}
 	else if (e.keyCode == 40) { 
 		// alert("Down"); 
@@ -213,7 +213,7 @@ function dealWithKeyboard(e) {
 		    x[7].innerHTML = "save"
 		}
 		else x[7].style.backgroundColor = "white";
-		nextTitle()     
+		nextTitle("save")     
 	}
 	else if (e.keyCode == 32) { 
 		// alert("Space"); 
@@ -387,7 +387,7 @@ swipedetect(el, function(swipedir){
 		}
 		else x[3].style.backgroundColor = "white";
 		// updateDislikes(username, titleInfo)
-		nextTitle() // nextTitle(username)
+		nextTitle("dislike") // nextTitle(username)
 	}
 	else if (swipedir == "up") { 
 		// alert("Up"); 
@@ -400,7 +400,7 @@ swipedetect(el, function(swipedir){
 		    x[1].innerHTML = "skip"
 		}
 		else x[1].style.backgroundColor = "white";
-		nextTitle()  // nexTitle(username)
+		nextTitle("skip")  // nexTitle(username)
     }
 	else if (swipedir == "right") { 
 		// alert("Right"); 
@@ -414,7 +414,7 @@ swipedetect(el, function(swipedir){
 		}
 		else x[5].style.backgroundColor = "white";
 		// updateLikes(username, titleInfo)
-		nextTitle()     
+		nextTitle("like")     
 	}
 	else if (swipedir == "down") { 
 		// alert("Down"); 
@@ -428,7 +428,7 @@ swipedetect(el, function(swipedir){
 		}
 		else x[7].style.backgroundColor = "white";
 		// updateSaves(username)
-		nextTitle()  // nextTitle(username)
+		nextTitle("save")  // nextTitle(username)
 	}
     // el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
 });
