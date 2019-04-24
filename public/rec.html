@@ -97,9 +97,10 @@ h2 {
 	<div class="dropdown">
 	<button onclick="myFunction()" class="dropbtn">&#9776</button>
 		<div id="myDropdown" class="dropdown-content">
-			<a href="/rec">Recommendations</a>
+			<a href="/recs">Recommendations</a>
 			<a href="/likes">My Liked Titles</a>
-			<a href="#saved">My Saved Titles</a>
+			<a href="/dislikes">My Disliked Titles</a>
+			<a href="/saves">My Saved Titles</a>
 		</div>
 
 		<div class="dropdown">
@@ -156,7 +157,7 @@ h2 {
 
 <script>
 
-nextTitle("skip") 
+nextTitle("skip"); // when window first loads
 
 window.addEventListener("keyup", dealWithKeyboard, true);
  
@@ -164,59 +165,51 @@ function dealWithKeyboard(e) {
 	// Key press
     var x = document.getElementById("help").getElementsByTagName("td");
 	if (e.keyCode == 37) { 
-		// alert("Left"); 
 		if (x[3].style.backgroundColor != "rgb(97, 110, 123)") {
 		    setTimeout(function() { 
 		    	x[3].style.backgroundColor = "white"; 
 		    	x[3].innerHTML = "";
 			}, 800);
-		    // x[3].style.backgroundColor = "#4B80B5";
 		    x[3].innerHTML = "dislike"
 		}
 		else x[3].style.backgroundColor = "white";
 		nextTitle("dislike")     
 	}
 	else if (e.keyCode == 38) { 
-		// alert("Up"); 
 		if (x[1].style.backgroundColor != "rgb(97, 110, 123)") {
 		    setTimeout(function() { 
 		    	x[1].style.backgroundColor = "white"; 
 		    	x[1].innerHTML = "";
 			}, 800);
-		    // x[1].style.backgroundColor = "#4B80B5";
 		    x[1].innerHTML = "skip"
 		}
 		else x[1].style.backgroundColor = "white";
 		nextTitle("skip")     
     }
 	else if (e.keyCode == 39) { 
-		// alert("Right"); 
 		if (x[5].style.backgroundColor != "rgb(97, 110, 123)") {
 		    setTimeout(function() { 
 		    	x[5].style.backgroundColor = "white"; 
 		    	x[5].innerHTML = "";
 			}, 800);
-		    // x[5].style.backgroundColor = "#4B80B5";
 		    x[5].innerHTML = "like"
 		}
 		else x[5].style.backgroundColor = "white";
 		nextTitle("like")     
 	}
 	else if (e.keyCode == 40) { 
-		// alert("Down"); 
 		if (x[7].style.backgroundColor != "rgb(97, 110, 123)") {
 		    setTimeout(function() { 
 		    	x[7].style.backgroundColor = "white"; 
 		    	x[7].innerHTML = "";
 			}, 800);
-		    // x[7].style.backgroundColor = "#4B80B5";
 		    x[7].innerHTML = "save"
 		}
 		else x[7].style.backgroundColor = "white";
 		nextTitle("save")     
 	}
 	else if (e.keyCode == 32) { 
-		// alert("Space"); 
+		// spacebar 
 		var info = document.getElementById("titleInfo")
 		alert(info.innerHTML)
 	} 
@@ -259,7 +252,7 @@ function nextTitle(action) {
     var titleInfo = ""
     if (sortedList.length == 0 || action != "like")
     {
-    	// alert("Get recs from file")
+    	alert("Get recs from file")
 	    // Get recs from file
 	    var recs = getRecsFromFile()
 		var i = getRandomArbitrary(0, recs.length)
@@ -438,13 +431,7 @@ swipedetect(el, function(swipedir){
 
 <script type="text/javascript">
 
-// var info = getUserLists(window.localStorage.getItem('currentUser'))
-// var likes = info[0]
-// var dislikes = info[1]
-// var saves = info[2]
-// var recs = info[3]
-
-// Called within <script>, once we figure out how to get username 
+// Retrieves username's lists from database
 function getUserLists(username) {
 	// Initialize Firebase
 	var config = {
@@ -475,6 +462,7 @@ function getUserLists(username) {
 	return lists;
 }
 
+// Updates username's lists to database
 function updateUserLists(username, likes, dislikes, saves, recs) {
 	// Initialize Firebase
 	var config = {
