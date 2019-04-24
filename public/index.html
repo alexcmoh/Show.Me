@@ -279,7 +279,6 @@ window.onclick = function(event) {
 				location.reload();
 			}
 			else {
-				window.alert("Creating user: " + userTextField.value);
 				docRef.set({
 					password: passSave,
 					username: userSave,
@@ -291,8 +290,6 @@ window.onclick = function(event) {
 				window.location.replace("rec.html");
 			}
 	});
-	
-	window.alert("End");
 	
 	return false;
 	}
