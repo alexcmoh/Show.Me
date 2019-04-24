@@ -91,7 +91,8 @@ def test():
 	df_votes = df["numVotes"] # doesn't end up getting used, i think
 	df_genres = df["genres"]
 
-	print(df)
+	for i in range(len(df_titles)):
+		print(df_titles.iloc[i], "@", df_genres.iloc[i], "@", df_ratings.iloc[i], "\n", end=" ")
 
 	result = list()
 
