@@ -100,7 +100,13 @@ h2 {
   </div>
 </div>
 
-<p><b>logged in as: </b> window.localStorage.getItem('currentUser')</p>
+<p><b>logged in as: </b></p>
+
+<p id="printName"></p>
+
+<script>
+	document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+</script>
 
 <p>arrows or swipe. right to like, left to discard, down to save, up to skip.</p>
 
