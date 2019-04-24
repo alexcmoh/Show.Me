@@ -266,7 +266,7 @@ window.onclick = function(event) {
 	const userTextField = document.querySelector('#reguname');
 	const passTextField = document.querySelector('#regpsw');
 	const registerBut = document.querySelector('#regButton');
-	var docRef = firestore.collection('users').doc(userTextField.value);
+	const docRef = firestore.doc('users/' + userTextField.value);
 
 	const userSave = userTextField.value;
 	const passSave = passTextField.value;
@@ -275,20 +275,19 @@ window.onclick = function(event) {
 			if(doc.exists) {
 				window.alert("User already exists!");
 				location.reload();
-				return false;
+			}
+			else {
+				window.alert("Creating user: " + userTextField.value);
+				docRef.set({
+					password: passSave,
+					username: userSave,
+					likes: "",
+					dislikes: "",
+					saves: ""
+				});
+				window.location.replace("rec.html");
 			}
 	});
-	
-	window.alert("Creating user!");
-	docRef.set({
-		password: passSave,
-		username: userSave,
-		likes: "",
-		dislikes: "",
-		saves: ""
-	});
-	window.location.replace("rec.html");
-	
 	return false;
 	}
 </script>
