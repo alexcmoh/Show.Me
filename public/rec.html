@@ -426,6 +426,11 @@ swipedetect(el, function(swipedir){
 		// updateSaves(username)
 		nextTitle()  // nextTitle(username)
 	}
+	else if (e.keyCode == 32)
+	{
+		var info = document.getElementById("titleInfo")
+		alert(info.innerHTML)
+	}
     // el.innerHTML = 'Swiped <span style="color:yellow;margin: 0 5px;">' + swipedir +'</span>';
 });
 
