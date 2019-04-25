@@ -258,11 +258,6 @@ h2 {
   </form>
 </div>
 
-
-
-
-
-  
 <script>
 // Get the modal
 var modal = document.getElementById('id00');
@@ -283,8 +278,7 @@ window.onclick = function(event) {
 
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
 
-<script type="text/javascript">
-	function register() {
+<script>
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
@@ -295,6 +289,10 @@ window.onclick = function(event) {
     messagingSenderId: "336455638979"
   };
   firebase.initializeApp(config);
+</script>
+
+<script type="text/javascript">
+	function register() {
 	var firestore = firebase.firestore();
 	
 	const userTextField = document.querySelector('#reguname');
@@ -320,7 +318,8 @@ window.onclick = function(event) {
 					saves: "",
 					recs: ""
 				});
-				window.alert("User saved! Please login to continue.");
+				// window.alert("User saved! Please login to continue.");
+				window.location.replace("rec.html");
 			}
 	});
 	return false;
@@ -329,16 +328,7 @@ window.onclick = function(event) {
 
 <script type="text/javascript">
 	function authCheck() {
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-    authDomain: "showme-22fa9.firebaseapp.com",
-    databaseURL: "https://showme-22fa9.firebaseio.com",
-    projectId: "showme-22fa9",
-    storageBucket: "showme-22fa9.appspot.com",
-    messagingSenderId: "336455638979"
-  };
-  firebase.initializeApp(config);
+
 	var firestore = firebase.firestore();
 	
 	const userLogField = document.querySelector('#loguname');
