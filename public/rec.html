@@ -114,6 +114,7 @@ p {
 	</script><br><br>
 
 <p id="welcome">arrows or swipe. right to like, left to discard, down to save, up to skip.</p><br>
+
 <!-- Main table for title -->
 <table class="some_style" align="center" border="0" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse;" id="help">
 	<tbody>
@@ -154,22 +155,18 @@ p {
 
 <script>
 
-  var config = {
-    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-    authDomain: "showme-22fa9.firebaseapp.com",
-    databaseURL: "https://showme-22fa9.firebaseio.com",
-    projectId: "showme-22fa9",
-    storageBucket: "showme-22fa9.appspot.com",
-    messagingSenderId: "336455638979"
-  };
-	//alert("before init")
-  firebase.initializeApp(config);
+var config = {
+	apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+	authDomain: "showme-22fa9.firebaseapp.com",
+	databaseURL: "https://showme-22fa9.firebaseio.com",
+	projectId: "showme-22fa9",
+	storageBucket: "showme-22fa9.appspot.com",
+	messagingSenderId: "336455638979"
+};
+firebase.initializeApp(config);
 
-  
-// alert("Hello");
-if (window.localStorage.getItem('currentUser') == "") 
-{
-	// alert("...");
+// If not logged in
+if (window.localStorage.getItem('currentUser') == "") {
 	var msg = document.getElementById("welcome");
 	msg.innerHTML = "You are not logged in. Please click &#10754 to log in to start building your recommendations.";
 	var titleText = document.getElementById("help");
@@ -180,7 +177,6 @@ nextTitle("skip")
 
 // Window event listener
 window.addEventListener("keyup", dealWithKeyboard, true);
-
 function dealWithKeyboard(e) {
 	// Key press
 	var x = document.getElementById("help").getElementsByTagName("td");
@@ -248,23 +244,18 @@ function getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-// var trainData = "Fixed Bayonets! @ Action,Drama,War @ 7.0 \n  Union Station @ Crime,Drama,Film-Noir @ 6.8 \n  Crash Dive @ Action,Adventure,Drama @ 6.4 "
 
 function nextTitle(action) {
-	if (action == "like")
-	{
+	if (action == "like") {
 		var info = document.getElementById("titleInfo").innerHTML;
-		//alert("info".concat(info));
 		writeToLikes(info);
 	}
 	else if (action == "dislike") {
 		var info = document.getElementById("titleInfo").innerHTML;
-		//alert("info".concat(info));
 		writeToDislikes(info);
 	}
 	else if (action == "save") {
 		var info = document.getElementById("titleInfo").innerHTML;
-		//alert("info".concat(info));
 		writeToSaves(info);
 	}
 	// Formatting for title string
@@ -275,9 +266,7 @@ function nextTitle(action) {
     var trainData = getRecsFromFile()
     var sortedList = knn(trainData.join("\n"));
     var titleInfo = ""
-    if (sortedList.length == 0 || action.trim() != "like") 
-    {
-    	// alert("Get recs from file")
+    if (sortedList.length == 0 || action.trim() != "like") {
 	    // Get recs from file
 	    var recs = getRecsFromFile()
 		var i = getRandomArbitrary(0, recs.length)
@@ -285,16 +274,14 @@ function nextTitle(action) {
 		var titleGenres = titleInfo[1].trim().split(",") 
 		var titleRating = titleInfo[2]
 	}
-	else
-	{
-		// alert("Get recs from first 0.5% of sortedList: ".concat(sortedList))
+	else {
 		// Pick from start of sorted list
 		var i = getRandomArbitrary(0, Math.floor(sortedList.length*0.001));
 		titleInfo = sortedList[i].split("@")
 		var historyInfo = document.getElementById("pastRecs")
 		if (historyInfo.innerHTML.includes(sortedList[i].split("@")[0].trim())) 
 		{
-			// alert(sortedList[i].concat(" already in history"))
+			// Already in history, recompute
 			i = getRandomArbitrary(0, Math.floor(sortedList.length*0.02));
 			titleInfo = sortedList[i].split("@")
 		}
@@ -302,18 +289,14 @@ function nextTitle(action) {
 
 	// Updates rec history in this session
 	var history = document.getElementById("pastRecs")
-	if (history.innerHTML == "EMPTY")
-	{
+	if (history.innerHTML == "EMPTY") {
 		history.innerHTML = titleInfo;
 	}
-	else
-	{
+	else {
 		var temp = history.innerHTML 
 		temp = temp.concat("\n", titleInfo)
 		history.innerHTML = temp;
 	}
-
-	// alert("History: ".concat(history.innerHTML))
 
 	// Update screen
 	updateTitle(titleInfo)
@@ -336,8 +319,6 @@ function updateTitle(titleInfo) {
     x[4].innerHTML = str1.concat(title, str3);
     var str = title.concat("@", genres, "@", rating)
     y.innerHTML = str;
-
-    // alert(document.getElementById("titleInfo").innerHTML)
 }
 
 
@@ -347,7 +328,6 @@ function getRecsFromFile() {
 	var client = new XMLHttpRequest();
 	client.open('GET', 'titles.txt', false);
 	client.onreadystatechange = function() {
-		// alert(client.responseText);
 		var response = client.responseText;
 		var titles = response.split("\n")
 		for (var i = 0; i < titles.length; i++) {
@@ -355,7 +335,6 @@ function getRecsFromFile() {
 		}
 	}
 	client.send();
-	// alert(recs)
 	return recs
 }
 
@@ -438,7 +417,6 @@ function knn(trainData) {
 
 	var titleInfo = document.getElementById("titleInfo").innerHTML.trim()
 	var likes = getFromLikes()
-	// alert("returned from getFromLikes");
 
 	// If likes list is empty, add directly
 	if (likes.length == 0)
@@ -456,8 +434,7 @@ function knn(trainData) {
 		var scores = [] // used to insert-sort entries into smartRecs
 
 		// For each title in titlelist, compute average score
-		for (var i = 0; i < trainInfo.length; i++)
-		{
+		for (var i = 0; i < trainInfo.length; i++) {
 			// Get average score for the entry
 			var score = 0
 			var alreadyLiked = 0
@@ -466,27 +443,21 @@ function knn(trainData) {
 				var x = likeInfo[j].split("@")
 				var d = distance(x[0].toLowerCase(), y[0].toLowerCase(), " ")
 				var d1 = distance(x[1].toLowerCase(), y[1].toLowerCase(), ",")
-
 				// Scale score by entry's rating
-				if (x[2] != 0)
-				{
+				if (x[2] != 0) {
 					d = d*parseFloat(y[2]) 
 					d1 = d1*parseFloat(y[2])
 					score += d + d1 
 				}
-
 				// Check to avoid repeated recommendation
 				if (x == y)
 					alreadyLiked = 1
 			}
-
 			// Insert-sort into the list
 			if (alreadyLiked == 0) 
 				insertSort(smartRecs, scores, trainInfo[i], score)
 		}
-		// alert(smartRecs)
 	}
-	// updateUserLists(username, likes, dislikes, saves, recs)
 	return smartRecs
 }
 
@@ -550,15 +521,8 @@ function intersection(list1, list2) {
 }
   
 function writeToLikes(titleInfo) {
-	//alert("writeToLikes")
-	// TODO
-	// 1. Retrieve user's likes list from database (call getFromLikes)
-	// 2. Append "\n" + titleInfo to likes list
-	// 3. Write updated likes list back to database
-	  // Initialize Firebase
-
-  var firestore = firebase.firestore();
-  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	var firestore = firebase.firestore();
+	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
 	docRef.get().then(function(doc) {
 			if(doc.exists) {
 				const myData = doc.data();
@@ -574,7 +538,6 @@ function writeToLikes(titleInfo) {
 				}
 			}
 	});
-	
 }
 function getFromLikes() {
 	var firestore = firebase.firestore();
@@ -589,9 +552,8 @@ function getFromLikes() {
 }
 
 function writeToDislikes(titleInfo) {
-
-  var firestore = firebase.firestore();
-  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	var firestore = firebase.firestore();
+	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
 	docRef.get().then(function(doc) {
 			if(doc.exists) {
 				const myData = doc.data();
@@ -610,9 +572,8 @@ function writeToDislikes(titleInfo) {
 	
 }
 function writeToSaves(titleInfo) {
-
-  var firestore = firebase.firestore();
-  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	var firestore = firebase.firestore();
+	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
 	docRef.get().then(function(doc) {
 			if(doc.exists) {
 				const myData = doc.data();
@@ -628,7 +589,6 @@ function writeToSaves(titleInfo) {
 				}
 			}
 	});
-	
 }
 
 
