@@ -27,6 +27,9 @@ h2 {
 	display: inline;
 }
 
+p {
+  display: inline;
+}
 /*table.some_style td {
 background-color: #0f0;
 }*/
@@ -76,13 +79,12 @@ background-color: #616E7B;
 
 .show {display: block;}
 
-
 </style>
 
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-	<title></title>
+	<title>show.me my likes</title>
 </head>
 
 <body>
@@ -103,20 +105,19 @@ background-color: #616E7B;
     <a href="/">Log out</a>
   </div>
 </div>
+<p>
+  <br><p><b>logged in as: </b></p> <p id="printName"></p>
+  <script>
+    document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+    function logout() {
+      window.localStorage.setItem('currentUser', "");
+      window.location.replace("/");
+    }
+  </script><br><br>
 
-<p><b>logged in as: </b> 
-{% block content %}
-{% if user.is_authenticated %}
-  {{ user.username }}
-{% else %}
-  you are not logged in
-  <br>your actions will not be saved
-{% endif %}
-{% endblock %}
+  <p>a list of all the movie titles you liked</p><br>
+  <p id = "likes"><br>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
 </p>
-<p>list of titles you liked.</p>
-
-
 </div>
 <p>&nbsp;</p>
 
@@ -125,6 +126,50 @@ background-color: #616E7B;
 </html>
 
 <script>
+
+var config = {
+  apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+  authDomain: "showme-22fa9.firebaseapp.com",
+  databaseURL: "https://showme-22fa9.firebaseio.com",
+  projectId: "showme-22fa9",
+  storageBucket: "showme-22fa9.appspot.com",
+  messagingSenderId: "336455638979"
+};
+firebase.initializeApp(config);
+
+function getFromLikes() {
+  var firestore = firebase.firestore();
+  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+  docRef.get().then(function(doc) {
+      if(doc.exists) {
+        const myData = doc.data();
+        return myData.likes;
+      }
+  });
+  return ""
+}
+
+function displayLikes() { 
+  var likes = getFromLikes();
+  var mod = document.getElementById("likes")
+  if (likes != "")
+  {
+    var temp = ""
+    var likesArray = likes.split("\n")
+    for (var i = 0; i < likesArray.length; i++)
+    {
+      var titleArray = likesArray[i].split("@")
+      temp = temp.concat("<br>", titleArray[0])
+    }
+    mod.innerHTML = temp;
+  }
+  else
+  {
+    mod.innerHTML = "<br>Your likes list is empty";
+  }
+
+}
+
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
