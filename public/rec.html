@@ -598,18 +598,6 @@ function writeToDislikes(titleInfo) {
 	});
 	
 }
-function getFromDislikes() {
-	var firestore = firebase.firestore();
-	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
-	docRef.get().then(function(doc) {
-			if(doc.exists) {
-				const myData = doc.data();
-				return myData.dislikes;
-			}
-	});
-	return ""
-}
-
 function writeToSaves(titleInfo) {
 
   var firestore = firebase.firestore();
@@ -630,17 +618,6 @@ function writeToSaves(titleInfo) {
 			}
 	});
 	
-}
-function getFromSaves() {
-	var firestore = firebase.firestore();
-	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
-	docRef.get().then(function(doc) {
-			if(doc.exists) {
-				const myData = doc.data();
-				return myData.saves;
-			}
-	});
-	return ""
 }
 
 
