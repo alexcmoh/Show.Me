@@ -93,13 +93,13 @@ p {
 <div class="dropdown">
 	<button onclick="myFunction()" class="dropbtn">&#9776</button>
 	<div id="myDropdown" class="dropdown-content">
-		<a href="/rec">Recommendations</a>
-		<a href="/likes">My Liked Titles</a>
-		<a href="#saved">My Saved Titles</a>
-	</div>
+    <a href="/rec.html">Recommendations</a>
+    <a href="/likes.html">My Liked Titles</a>
+    <a href="/dislikes.html">My Disliked Titles</a>
+    <a href="/saves.html">My Saved Titles</a>
+</div>
 <div class="dropdown">
 	<button onclick="logout()" class="dropbtn">&#10754</button>
-
 </div>
 
 <p>
@@ -196,7 +196,7 @@ function dealWithKeyboard(e) {
 	else if (e.keyCode == 32)
 	{
 		var info = document.getElementById("titleInfo")
-		// alert(info.innerHTML)
+		alert(info.innerHTML)
 	}
 }
 

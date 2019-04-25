@@ -13,7 +13,8 @@ body {font-family: Arial, Helvetica, sans-serif; background-color: white}
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   width: 300px;
-  max-height: 80%;
+  max-height: 80%; 
+  min-height: 50%;
   
 }
 
@@ -98,16 +99,15 @@ background-color: #616E7B;
  <div class="dropdown">
   <button onclick="myFunction()" class="dropbtn">&#9776</button>
   <div id="myDropdown" class="dropdown-content">
-    <a href="/rec">Recommendations</a>
-    <a href="/likes">My Liked Titles</a>
-    <a href="#saved">My Saved Titles</a>
+    <a href="/rec.html">Recommendations</a>
+    <a href="/likes.html">My Liked Titles</a>
+    <a href="/dislikes.html">My Disliked Titles</a>
+    <a href="/saves.html">My Saved Titles</a>
   </div>
-   <div class="dropdown">
-  <button onclick="myFunction1()" class="dropbtn">&#10754</button>
-  <div id="myDropdown1" class="dropdown-content">
-    <a href="/">Log out</a>
-  </div>
+<div class="dropdown">
+	<button onclick="logout()" class="dropbtn">&#10754</button>
 </div>
+
 <p>
   <br><p><b>logged in as: </b></p> <p id="printName"></p>
   <script>
@@ -118,7 +118,7 @@ background-color: #616E7B;
     }
   </script><br><br>
 
-  <p>a list of all the movie titles you liked</p><br>
+  <p><b>your likes</b></p><br>
   <p id = "likes"><br>Loading your likes...
 </p>
 </div>
@@ -147,7 +147,13 @@ firebase.initializeApp(config);
 displayLikes("");
 
 function displayLikes(abc) { 
+		  var mod = document.getElementById("likes")
   //var likes = getFromLikes();
+    if (window.localStorage.getItem('currentUser') == "") {
+	mod.innerHTML = "<br>You are not logged in. Please click &#10754 to log in to view your lists";	
+	return 0;
+	}
+	
   var likesList = "";
   
   var firestore = firebase.firestore();
@@ -156,7 +162,6 @@ function displayLikes(abc) {
       if(doc.exists) {
         const myData = doc.data();
         likesList = myData.likes;
-		  var mod = document.getElementById("likes")
   
   if (likesList != "")
   {
@@ -175,7 +180,10 @@ function displayLikes(abc) {
   }
 
       }
+
   });
+  
+
 
 
 }

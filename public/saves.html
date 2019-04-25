@@ -4,14 +4,18 @@
 <style type="text/css">
 body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 
-.center {
+.center { 
+  overflow: auto;
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width: 300px; 
+  width: 300px;
+  max-height: 80%; 
+  min-height: 50%;
+  
 }
 
 body {
@@ -27,6 +31,9 @@ h2 {
 	display: inline;
 }
 
+p {
+  display: inline;
+}
 /*table.some_style td {
 background-color: #0f0;
 }*/
@@ -76,13 +83,12 @@ background-color: #616E7B;
 
 .show {display: block;}
 
-
 </style>
 
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-	<title></title>
+	<title>show.me my saves</title>
 </head>
 
 <body>
@@ -93,30 +99,28 @@ background-color: #616E7B;
  <div class="dropdown">
   <button onclick="myFunction()" class="dropbtn">&#9776</button>
   <div id="myDropdown" class="dropdown-content">
-    <a href="/rec">Recommendations</a>
-    <a href="/likes">My Liked Titles</a>
-    <a href="#saved">My Saved Titles</a>
+    <a href="/rec.html">Recommendations</a>
+    <a href="/likes.html">My Liked Titles</a>
+    <a href="/dislikes.html">My Disliked Titles</a>
+    <a href="/saves.html">My Saved Titles</a>
   </div>
-   <div class="dropdown">
-  <button onclick="myFunction1()" class="dropbtn">&#10754</button>
-  <div id="myDropdown1" class="dropdown-content">
-    <a href="/">Log out</a>
-  </div>
+<div class="dropdown">
+	<button onclick="logout()" class="dropbtn">&#10754</button>
 </div>
 
-<p><b>logged in as: </b> 
-{% block content %}
-{% if user.is_authenticated %}
-  {{ user.username }}
-{% else %}
-  you are not logged in
-  <br>your actions will not be saved
-{% endif %}
-{% endblock %}
+<p>
+  <br><p><b>logged in as: </b></p> <p id="printName"></p>
+  <script>
+    document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+    function logout() {
+      window.localStorage.setItem('currentUser', "");
+      window.location.replace("/");
+    }
+  </script><br><br>
+
+  <p><b>your saves</b></p><br>
+  <p id = "likes"><br>Loading your saves...
 </p>
-<p>list of titles you saved.</p>
-
-
 </div>
 <p>&nbsp;</p>
 
@@ -124,7 +128,66 @@ background-color: #616E7B;
 
 </html>
 
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
+
 <script>
+var config = {
+  apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+  authDomain: "showme-22fa9.firebaseapp.com",
+  databaseURL: "https://showme-22fa9.firebaseio.com",
+  projectId: "showme-22fa9",
+  storageBucket: "showme-22fa9.appspot.com",
+  messagingSenderId: "336455638979"
+};
+firebase.initializeApp(config);
+
+
+displaySaves("");
+
+function displaySaves(abc) { 
+		  var mod = document.getElementById("likes")
+  //var likes = getFromLikes();
+    if (window.localStorage.getItem('currentUser') == "") {
+	mod.innerHTML = "<br>You are not logged in. Please click &#10754 to log in to view your lists";	
+	return 0;
+	}
+  //var likes = getFromLikes();
+  var likesList = "";
+  
+  var firestore = firebase.firestore();
+  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+  docRef.get().then(function(doc) {
+      if(doc.exists) {
+        const myData = doc.data();
+        likesList = myData.saves;
+  
+  if (likesList != "")
+  {
+    var temp = ""
+    var likesArray = likesList.split("\n")
+    for (var i = 0; i < likesArray.length; i++)
+    {
+      var titleArray = likesArray[i].split("@")
+      temp = temp.concat("<br>", titleArray[0])
+    }
+	
+    mod.innerHTML = temp;
+  }
+  else
+  {
+    mod.innerHTML = "<br>Your dislikes list is empty";
+  }
+
+      }
+
+  });
+
+
+}
+
+
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
