@@ -12,9 +12,11 @@ The name of your project and a brief description:
 
 * Show.me is a browser-based movie recommendation system. 
 
-* Use the arrow keys (desktop) or swipe (mobile) to like, dislike, save, or skip a title.
+* Use the arrow keys (desktop) or swipe (mobile) to like, dislike, save, or skip a recommended.
 
-* Titles you liked, disliked, and saved will be saved to your account, and can be viewed in the menu. 
+* Titles you liked, disliked, and saved will be saved to your account, and can be viewed in the menu.
+
+* Recommendations will be suggested based on your previously liked titles. 
 
 What technologies you will be using and services:
 
