@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-
 <style type="text/css">
 body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 
@@ -34,13 +33,7 @@ h2 {
 p {
   display: inline;
 }
-/*table.some_style td {
-background-color: #0f0;
-}*/
 
-/*table.some_style td:hover {
-background-color: #616E7B;
-}*/
 .dropbtn {
   background-color: white;
   color: black;
@@ -87,9 +80,7 @@ background-color: #616E7B;
 
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<head>
-	<title>show.me my dislikes</title>
-</head>
+<head><title>show.me my dislikes</title></head>
 
 <body>
 
@@ -109,17 +100,17 @@ background-color: #616E7B;
 </div>
 
 <p>
-  <br><p><b>logged in as: </b></p> <p id="printName"></p>
-  <script>
-    document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
-    function logout() {
-      window.localStorage.setItem('currentUser', "");
-      window.location.replace("/");
-    }
-  </script><br><br>
+<br><p><b>logged in as: </b></p> <p id="printName"></p>
+<script>
+  document.getElementById("printName").innerHTML = window.localStorage.getItem('currentUser');
+  function logout() {
+    window.localStorage.setItem('currentUser', "");
+    window.location.replace("/");
+  }
+</script><br><br>
 
-  <p><b>your dislikes</b></p><br>
-  <p id = "likes"><br>Loading your dislikes...
+<p><b>your dislikes</b></p><br>
+<p id = "likes"><br>Loading your dislikes...
 </p>
 </div>
 <p>&nbsp;</p>
@@ -133,6 +124,7 @@ background-color: #616E7B;
 <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
 
 <script>
+
 var config = {
   apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
   authDomain: "showme-22fa9.firebaseapp.com",
@@ -147,44 +139,36 @@ firebase.initializeApp(config);
 displayDislikes("");
 
 function displayDislikes(abc) { 
-		  var mod = document.getElementById("likes")
-  //var likes = getFromLikes();
-    if (window.localStorage.getItem('currentUser') == "") {
-	mod.innerHTML = "<br>You are not logged in. Please click &#10754 to log in to view your lists.";	
-	return 0;
+  var mod = document.getElementById("likes")
+  if (window.localStorage.getItem('currentUser') == "") {
+  	mod.innerHTML = "<br>You are not logged in. Please click &#10754 to log in to view your lists.";	
+  	return 0;
 	}
-  //var likes = getFromLikes();
+
   var likesList = "";
   
   var firestore = firebase.firestore();
   const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+
   docRef.get().then(function(doc) {
-      if(doc.exists) {
-        const myData = doc.data();
-        likesList = myData.dislikes;
-  
-  if (likesList != "")
-  {
-    var temp = ""
-    var likesArray = likesList.split("\n")
-    for (var i = 0; i < likesArray.length; i++)
-    {
-      var titleArray = likesArray[i].split("@")
-      temp = temp.concat("<br>", titleArray[0])
-    }
-	
-    mod.innerHTML = temp;
-  }
-  else
-  {
-    mod.innerHTML = "<br>Your dislikes list is empty";
-  }
+    if(doc.exists) {
+      const myData = doc.data();
+      likesList = myData.dislikes;
 
+      if (likesList != "") {
+        var temp = ""
+        var likesArray = likesList.split("\n")
+        for (var i = 0; i < likesArray.length; i++) {
+          var titleArray = likesArray[i].split("@")
+          temp = temp.concat("<br>", titleArray[0])
+        }
+        mod.innerHTML = temp;
       }
-
+      else {
+        mod.innerHTML = "<br>Your dislikes list is empty";
+      }
+    }
   });
-
-
 }
 
 
@@ -208,6 +192,7 @@ window.onclick = function(event) {
     }
   }
 }
+
 </script>
 
 
