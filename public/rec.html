@@ -196,7 +196,7 @@ function dealWithKeyboard(e) {
 	else if (e.keyCode == 32)
 	{
 		var info = document.getElementById("titleInfo")
-		alert(info.innerHTML)
+		// alert(info.innerHTML)
 	}
 }
 
@@ -245,6 +245,16 @@ function nextTitle(action) {
 		var info = document.getElementById("titleInfo").innerHTML;
 		//alert("info".concat(info));
 		writeToLikes(info);
+	}
+	else if (action == "dislike") {
+		var info = document.getElementById("titleInfo").innerHTML;
+		//alert("info".concat(info));
+		writeToDislikes(info);
+	}
+	else if (action == "save") {
+		var info = document.getElementById("titleInfo").innerHTML;
+		//alert("info".concat(info));
+		writeToSaves(info);
 	}
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
@@ -538,7 +548,6 @@ function writeToLikes(titleInfo) {
 
   var firestore = firebase.firestore();
   const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
-	//alert("before get")
 	docRef.get().then(function(doc) {
 			if(doc.exists) {
 				const myData = doc.data();
@@ -556,32 +565,84 @@ function writeToLikes(titleInfo) {
 	});
 	
 }
-
-// function getFromLikes() {
-// 	// TODO
-// 	// 1. Retrieve user's likes list from database
-// 	// 2. Return this; this will be a string
-// }
-
 function getFromLikes() {
-	alert("getFromLikes")
-	// TODO
-	// 1. Retrieve user's likes list from database
-	// 2. Return this; this will be a string
-	// Temporary code
 	var firestore = firebase.firestore();
 	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
-	alert("before get")
 	docRef.get().then(function(doc) {
 			if(doc.exists) {
 				const myData = doc.data();
 				return myData.likes;
 			}
 	});
-	alert("return empty")
-
 	return ""
 }
+
+function writeToDislikes(titleInfo) {
+
+  var firestore = firebase.firestore();
+  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	docRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				if(myData.dislikes == "") {
+					docRef.update({
+						dislikes: titleInfo
+					});
+				}
+				else {
+					docRef.update({
+						dislikes: myData.dislikes + " \n " + titleInfo
+					});
+				}
+			}
+	});
+	
+}
+function getFromDislikes() {
+	var firestore = firebase.firestore();
+	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	docRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				return myData.dislikes;
+			}
+	});
+	return ""
+}
+
+function writeToSaves(titleInfo) {
+
+  var firestore = firebase.firestore();
+  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	docRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				if(myData.saves == "") {
+					docRef.update({
+						saves: titleInfo
+					});
+				}
+				else {
+					docRef.update({
+						saves: myData.saves + " \n " + titleInfo
+					});
+				}
+			}
+	});
+	
+}
+function getFromSaves() {
+	var firestore = firebase.firestore();
+	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	docRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				return myData.saves;
+			}
+	});
+	return ""
+}
+
 
 </script>
 
