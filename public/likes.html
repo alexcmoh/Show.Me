@@ -4,14 +4,17 @@
 <style type="text/css">
 body {font-family: Arial, Helvetica, sans-serif; background-color: white}
 
-.center {
+.center { 
+  overflow: auto;
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  width: 300px; 
+  width: 300px;
+  max-height: 80%;
+  
 }
 
 body {
@@ -116,7 +119,7 @@ background-color: #616E7B;
   </script><br><br>
 
   <p>a list of all the movie titles you liked</p><br>
-  <p id = "likes"><br>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+  <p id = "likes"><br>Loading your likes...
 </p>
 </div>
 <p>&nbsp;</p>
@@ -125,8 +128,11 @@ background-color: #616E7B;
 
 </html>
 
-<script>
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
 
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
+
+<script>
 var config = {
   apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
   authDomain: "showme-22fa9.firebaseapp.com",
@@ -137,25 +143,25 @@ var config = {
 };
 firebase.initializeApp(config);
 
-function getFromLikes() {
+
+displayLikes("");
+
+function displayLikes(abc) { 
+  //var likes = getFromLikes();
+  var likesList = "";
+  
   var firestore = firebase.firestore();
   const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
   docRef.get().then(function(doc) {
       if(doc.exists) {
         const myData = doc.data();
-        return myData.likes;
-      }
-  });
-  return ""
-}
-
-function displayLikes() { 
-  var likes = getFromLikes();
-  var mod = document.getElementById("likes")
-  if (likes != "")
+        likesList = myData.likes;
+		  var mod = document.getElementById("likes")
+  
+  if (likesList != "")
   {
     var temp = ""
-    var likesArray = likes.split("\n")
+    var likesArray = likesList.split("\n")
     for (var i = 0; i < likesArray.length; i++)
     {
       var titleArray = likesArray[i].split("@")
@@ -168,7 +174,12 @@ function displayLikes() {
     mod.innerHTML = "<br>Your likes list is empty";
   }
 
+      }
+  });
+
+
 }
+
 
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
