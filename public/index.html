@@ -191,7 +191,6 @@ h2 {
 
 <div id="id00" class="modal">
   
-  <!-- <form class="modal-content animate" action="rec.html"> -->
   <form class="modal-content animate" action="#" onsubmit="return register();">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id00').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -207,19 +206,9 @@ h2 {
         
       <button type="submit" id="regButton">Register</button>
 	  
-	  <!--
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-	  -->
-	  
     </div>
-
-    <!-- <div class="container" style="background-color:#f1f1f1"> -->
-      <!-- <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Cancel</button> -->
-      <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
-    <!-- </div> -->
   </form>
+
 </div>
 
 <div id="id01" class="modal">
@@ -239,18 +228,7 @@ h2 {
         
       <button type="submit" id="logButton">Login</button>
 	  
-	  <!--
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-	  -->
-	  
     </div>
-
-    <!-- <div class="container" style="background-color:#f1f1f1"> -->
-      <!-- <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button> -->
-      <!-- <span class="psw">Forgot <a href="#">password?</a></span> -->
-    <!-- </div> -->
   </form>
 </div>
 
@@ -276,20 +254,20 @@ window.onclick = function(event) {
 
 <script>
   // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
-    authDomain: "showme-22fa9.firebaseapp.com",
-    databaseURL: "https://showme-22fa9.firebaseio.com",
-    projectId: "showme-22fa9",
-    storageBucket: "showme-22fa9.appspot.com",
-    messagingSenderId: "336455638979"
-  };
-  firebase.initializeApp(config);
+var config = {
+  apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+  authDomain: "showme-22fa9.firebaseapp.com",
+  databaseURL: "https://showme-22fa9.firebaseio.com",
+  projectId: "showme-22fa9",
+  storageBucket: "showme-22fa9.appspot.com",
+  messagingSenderId: "336455638979"
+};
+firebase.initializeApp(config);
 </script>
 
 <script type="text/javascript">
-	function register() {
-	var firestore = firebase.firestore();
+function register() {
+  var firestore = firebase.firestore();
 	
 	const userTextField = document.querySelector('#reguname');
 	const passTextField = document.querySelector('#regpsw');
@@ -300,29 +278,28 @@ window.onclick = function(event) {
 	const passSave = passTextField.value;
 	
 	docRef.get().then(function(doc) {
-			if(doc.exists) {
-				window.alert("User already exists!");
-				location.reload();
-			}
-			else {
-				window.localStorage.setItem('currentUser', userSave);
-				docRef.set({
-					password: passSave,
-					username: userSave,
-					likes: "",
-					dislikes: "",
-					saves: ""
-				});
-				window.alert("User saved! Please login to continue.");
-				// window.location.replace("rec.html");
-			}
+		if (doc.exists) {
+			window.alert("User already exists!");
+			location.reload();
+		}
+		else {
+			window.localStorage.setItem('currentUser', userSave);
+			docRef.set({
+				password: passSave,
+				username: userSave,
+				likes: "",
+				dislikes: "",
+				saves: ""
+			});
+			window.alert("User saved! Please login to continue.");
+		}
 	});
 	return false;
-	}
+}
 </script>
 
 <script type="text/javascript">
-	function authCheck() {
+function authCheck() {
 
 	var firestore = firebase.firestore();
 	
@@ -334,36 +311,26 @@ window.onclick = function(event) {
 	const userCheck = userLogField.value;
 	const passCheck = passLogField.value;
 	
-		docLogRef.get().then(function(doc) {
-			if(doc.exists) {
-				const myData = doc.data();
-				if(myData.username == userCheck && myData.password == passCheck) {
-					window.localStorage.setItem('currentUser', userCheck);
-					window.location.replace("rec.html");
-				}
-				else {
-					window.alert("Incorrect username or password!");
-					location.reload();
-				}
+	docLogRef.get().then(function(doc) {
+		if (doc.exists) {
+			const myData = doc.data();
+			if(myData.username == userCheck && myData.password == passCheck) {
+				window.localStorage.setItem('currentUser', userCheck);
+				window.location.replace("rec.html");
 			}
 			else {
 				window.alert("Incorrect username or password!");
 				location.reload();
 			}
-		});
-	return false;
-	}
-</script>
-
-<!--
-<script type="text/javascript">
-function testDirect() {
-	window.alert("Passed");
-	window.location.replace("rec.html");
+		}
+		else {
+			window.alert("Incorrect username or password!");
+			location.reload();
+		}
+	});
 	return false;
 }
-</script
--->
+</script>
 
 <br>
 
