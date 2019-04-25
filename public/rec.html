@@ -208,12 +208,12 @@ function dealWithKeyboard(e) {
 }
 
 function displayAction(index, action) {
-	// Prints action name in corresponding cell for 800ms
+	// Prints action name in corresponding cell for 1500ms
     var x = document.getElementById("help").getElementsByTagName("td");
     setTimeout(function() { 
     	x[index].style.backgroundColor = "white"; 
     	x[index].innerHTML = "";
-	}, 800);
+	}, 1500);
     x[index].innerHTML = action;
 }
 
