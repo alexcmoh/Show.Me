@@ -148,7 +148,22 @@ p {
 
 <!-- Script -->
 
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
+
 <script>
+
+  var config = {
+    apiKey: "AIzaSyAYAf35t-8bGqp-6WsRtSM-sqJqp5z9P_w",
+    authDomain: "showme-22fa9.firebaseapp.com",
+    databaseURL: "https://showme-22fa9.firebaseio.com",
+    projectId: "showme-22fa9",
+    storageBucket: "showme-22fa9.appspot.com",
+    messagingSenderId: "336455638979"
+  };
+	//alert("before init")
+  firebase.initializeApp(config);
 
 nextTitle("skip")
 
@@ -170,8 +185,8 @@ function dealWithKeyboard(e) {
     }
 	else if (e.keyCode == 39) { 
 		// alert("Right"); 
-		displayAction(5, "like")
-		nextTitle("like")     
+		displayAction(5, "like")   
+		nextTitle("like")  
 	}
 	else if (e.keyCode == 40) { 
 		// alert("Down"); 
@@ -225,6 +240,12 @@ function getRandomArbitrary(min, max) {
 // var trainData = "Fixed Bayonets! @ Action,Drama,War @ 7.0 \n  Union Station @ Crime,Drama,Film-Noir @ 6.8 \n  Crash Dive @ Action,Adventure,Drama @ 6.4 "
 
 function nextTitle(action) {
+	if (action == "like")
+	{
+		var info = document.getElementById("titleInfo").innerHTML;
+		//alert("info".concat(info));
+		writeToLikes(info);
+	}
 	// Formatting for title string
     const str1 = '<h2 style="text-align: center;"><q><span style="font-size:22px;"><span style="font-family:arial,helvetica,sans-serif;">'; 
     const str3 = '</span></span></q></h2>';
@@ -396,6 +417,7 @@ function knn(trainData) {
 
 	var titleInfo = document.getElementById("titleInfo").innerHTML.trim()
 	var likes = getFromLikes()
+	alert("returned from getFromLikes");
 
 	// If likes list is empty, add directly
 	if (likes.length == 0)
@@ -505,33 +527,61 @@ function intersection(list1, list2) {
 	// alert("end of intersection")
 	return numIntersections
 }
-
-function getFromLikes() {
+  
+function writeToLikes(titleInfo) {
+	//alert("writeToLikes")
 	// TODO
-	// 1. Retrieve user's likes list from database
-	// 2. Return this; this will be a string
-	// Temporary code
-	var likes = " Leaves From Satan's Book @ Drama @ 6.8 \n Dr. Jekyll and Mr. Hyde @ Drama,Horror,Sci-Fi @ 7.0 \n The Golem @ Fantasy,Horror @ 7.2 \n The Last of the Mohicans @ Action,Adventure,Drama @ 6.9  \n The Mark of Zorro @ Adventure,Romance,Western @ 7.2 \n The Penalty @ Crime,Drama,Horror @ 7.5  \n The Saphead @ Comedy @ 6.2 \n Way Down East @ Drama,Romance @ 7.8"
+	// 1. Retrieve user's likes list from database (call getFromLikes)
+	// 2. Append "\n" + titleInfo to likes list
+	// 3. Write updated likes list back to database
+	  // Initialize Firebase
 
-	var likes1 = " If I Had a Million @ Comedy,Drama @ 7.1 \n Jewel Robbery @ Comedy,Crime,Romance @ 7.4 \n Love Me Tonight @ Comedy,Musical,Romance @ 7.7 \n The Mask of Fu Manchu @ Adventure,Horror,Sci-Fi @ 6.4 \n Mata Hari @ Crime,Drama,Romance @ 6.7 \n The Most Dangerous Game @ Action,Adventure,Thriller @ 7.2 \n Movie Crazy @ Comedy,Family,Romance @ 7.2 \n The Mummy @ Fantasy,Horror @ 7.2 \n Murders in the Rue Morgue @ Crime,Horror,Mystery @ 6.4"
+  var firestore = firebase.firestore();
+  const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	//alert("before get")
+	docRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				if(myData.likes == "") {
+					docRef.update({
+						likes: titleInfo
+					});
+				}
+				else {
+					docRef.update({
+						likes: myData.likes + " \n " + titleInfo
+					});
+				}
+			}
+	});
 	
-	var likes0 = ""; // empty case
-
-	return likes0
 }
-
-// function writeToLikes(titleInfo) {
-// 	// TODO
-// 	// 1. Retrieve user's likes list from database (call getFromLikes)
-// 	// 2. Append "@" + titleInfo to likes list
-// 	// 3. Write updated likes list back to database
-// }
 
 // function getFromLikes() {
 // 	// TODO
 // 	// 1. Retrieve user's likes list from database
 // 	// 2. Return this; this will be a string
 // }
+
+function getFromLikes() {
+	alert("getFromLikes")
+	// TODO
+	// 1. Retrieve user's likes list from database
+	// 2. Return this; this will be a string
+	// Temporary code
+	var firestore = firebase.firestore();
+	const docRef = firestore.doc('users/' + window.localStorage.getItem('currentUser'));
+	alert("before get")
+	docRef.get().then(function(doc) {
+			if(doc.exists) {
+				const myData = doc.data();
+				return myData.likes;
+			}
+	});
+	alert("return empty")
+
+	return ""
+}
 
 </script>
 
